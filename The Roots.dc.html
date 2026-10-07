@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-c4aed045-c9d4-4d7f-a017-3d879a9e8aca/styles.css">
+<script src="_ds/classical-c4aed045-c9d4-4d7f-a017-3d879a9e8aca/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+<style>body{margin:0;background:oklch(.27 .05 160)}a{color:var(--color-accent-700);text-decoration:none}a:hover{color:var(--color-accent-600)}input[type=number]{-moz-appearance:textfield}</style>
+</helmet>
+<div style="--color-bg:oklch(.27 .05 160);--color-surface:oklch(.32 .05 160);--color-text:#efe9d8;--color-divider:rgba(214,185,120,.28);--color-neutral-600:#b9c6b4;--color-neutral-700:#d3dccd;--color-neutral-900:oklch(.18 .035 162);--color-accent-700:var(--color-accent-300);--font-heading:'Cormorant Garamond',serif;--font-body:'Jost',sans-serif;font-family:var(--font-body);font-weight:400;letter-spacing:.01em;color:var(--color-text);background:var(--color-bg);min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:40;background:var(--color-bg);border-bottom:1px solid var(--color-divider)">
+<div style="max-width:1240px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+<a href="#top" style="display:flex;flex-direction:column;line-height:1;color:var(--color-text)">
+<span style="font-family:var(--font-heading);font-size:30px;letter-spacing:.22em;font-weight:500">THE ROOTS</span>
+<span style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--color-accent-700);margin-top:6px">Stone-ground tea powder</span></a>
+<nav style="display:{{ custDisplayFlex }};gap:32px;font-size:12px;letter-spacing:.18em;text-transform:uppercase">
+<a href="#story" style="color:var(--color-text)" style-hover="color:var(--color-accent-700)">Story</a>
+<a href="#origin" style="color:var(--color-text)">Origin</a>
+<a href="#collection" style="color:var(--color-text)">Collection</a>
+<a href="#bulk" style="color:var(--color-text)">Wholesale</a></nav>
+<div style="display:flex;align-items:center;gap:16px">
+<div style="display:flex;border:1px solid var(--color-divider);border-radius:var(--radius-sm)">
+<button onClick="{{ goCustomer }}" style="{{ roleBtnC }}">Customer</button>
+<button onClick="{{ goAdmin }}" style="{{ roleBtnA }}">Admin</button></div>
+<button onClick="{{ openCart }}" class="btn btn-secondary" style="display:{{ custDisplayFlex }};gap:10px;align-items:center">Bag <span style="font-variant-numeric:tabular-nums">({{ cartCount }})</span></button>
+</div></div></header>
+
+<div id="top" style="display:{{ custDisplay }}">
+
+<section id="story" style="height:450vh;position:relative">
+<div style="position:sticky;top:73px;height:calc(100vh - 73px);overflow:hidden;background:var(--color-neutral-900)">
+<video id="rv" muted playsinline preload="auto" src="uploads/video.mp4" style="display:none"></video>
+<canvas id="rc" style="position:absolute;inset:0;width:100%;height:100%;filter:saturate(.92)"></canvas>
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,19,16,.55),rgba(20,19,16,.15) 40%,rgba(20,19,16,.7))"></div>
+<div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(24px,7vw,120px);color:#f3f2f2">
+<div id="rch1" style="position:absolute;max-width:640px;transition:opacity .7s,transform .7s">
+<div style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--color-accent-300)">Harvest MMXXVI</div>
+<h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(48px,8vw,104px);line-height:.98;margin:20px 0">A ritual worth <em>savouring.</em></h1>
+<p style="font-size:17px;line-height:1.7;max-width:480px;margin:0 0 32px">Tea ground on granite to the fineness of silk, sealed in lightproof tins and sent from our estate to your table.</p>
+<a href="#collection" class="btn btn-secondary" style="color:#f3f2f2;border-color:var(--color-accent-300);white-space:nowrap;align-self:flex-start;display:inline-block">Shop the collection</a></div>
+<div id="rch2" style="position:absolute;max-width:520px;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s">
+<div style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--color-accent-300)">Chapter I</div>
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(40px,6vw,76px);line-height:1;margin:18px 0">Craft &amp; story</h2>
+<div style="width:56px;border-top:1px solid var(--color-accent-300);margin-bottom:20px"></div>
+<p style="font-size:16px;line-height:1.75;text-align:justify;margin:0">Leaves are shade-grown for thirty days, picked by hand and milled on granite stones at thirty grams an hour. Every tin opens to powder that has never met the heat of a machine.</p></div>
+<div id="rch3" style="position:absolute;right:clamp(24px,7vw,120px);max-width:480px;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;text-align:right">
+<div style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--color-accent-300)">Chapter II</div>
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(40px,6vw,76px);line-height:1;margin:18px 0">The terroir</h2>
+<p style="font-size:16px;line-height:1.75;margin:0 0 28px">Grown above two thousand metres in volcanic soil and spring-fed mist. Six teas, one estate.</p>
+<a href="#collection" class="btn btn-secondary" style="color:#f3f2f2;border-color:var(--color-accent-300);white-space:nowrap;display:inline-block">Explore the teas</a></div>
+</div>
+<div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);text-align:center;color:#f3f2f2;font-size:10px;letter-spacing:.34em;text-transform:uppercase">
+<div style="margin-bottom:10px">Scroll to unfold</div>
+<div style="width:160px;height:1px;background:rgba(243,242,242,.3)"><div id="rbar" style="height:1px;width:0;background:var(--color-accent-300)"></div></div></div>
+</div></section>
+
+<section id="origin" style="max-width:1240px;margin:0 auto;padding:120px 32px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px;align-items:start">
+<div>
+<div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">Origin</div>
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(48px,6vw,84px);line-height:1;margin:16px 0 28px">From Uji to your cup</h2>
+<p style="font-size:17px;line-height:1.8;text-align:justify;margin:0">We buy directly from heritage gardens in Uji, Shizuoka and Kagoshima, and from the high valleys of Assam and Fuding. Cool nights and long mornings of mist give a deep umami and a sweetness no blend can imitate. Nothing is added — no sugar, no flavouring, no colour. Only leaf, ground very slowly.</p></div>
+<div style="border-top:1px solid var(--color-divider)">
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--color-divider)"><span style="color:var(--color-neutral-600)">Harvest elevation</span><span style="font-family:var(--font-heading);font-size:22px">1,800 – 2,400 m</span></div>
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--color-divider)"><span style="color:var(--color-neutral-600)">Milling</span><span style="font-family:var(--font-heading);font-size:22px">Granite, 30 g / hour</span></div>
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--color-divider)"><span style="color:var(--color-neutral-600)">Trade</span><span style="font-family:var(--font-heading);font-size:22px">Direct &amp; organic</span></div>
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--color-divider)"><span style="color:var(--color-neutral-600)">Packing</span><span style="font-family:var(--font-heading);font-size:22px">Nitrogen-flushed tin</span></div></div>
+</div></section>
+
+<section id="collection" style="border-top:1px solid var(--color-divider);max-width:1240px;margin:0 auto;padding:100px 32px">
+<div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:56px">
+<div><div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">The reserve</div>
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(44px,5vw,72px);line-height:1;margin:14px 0 0">The Collection</h2></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ filters }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button></sc-for></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:56px 40px">
+<sc-for list="{{ shown }}" as="p" hint-placeholder-count="6">
+<article style="display:flex;flex-direction:column;gap:20px">
+<button onClick="{{ p.open }}" class="plate" style="padding:0;border:0;background:none;cursor:pointer;display:block"><img src="{{ p.image }}" alt="{{ p.name }}" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"></button>
+<div><div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--color-accent-700)">{{ p.origin }}</div>
+<h3 style="font-family:var(--font-heading);font-weight:500;font-size:30px;margin:8px 0 10px;line-height:1.1">{{ p.name }}</h3>
+<p style="font-size:14.5px;line-height:1.7;text-align:justify;margin:0;color:var(--color-neutral-700)">{{ p.desc }}</p></div>
+<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--color-divider);padding-top:18px">
+<span style="font-family:var(--font-heading);font-size:28px;font-variant-numeric:tabular-nums">{{ p.priceFrom }}</span>
+<div style="display:flex;gap:10px"><button onClick="{{ p.open }}" class="btn btn-ghost">Details</button><button onClick="{{ p.quick }}" class="btn btn-primary">Add 250g</button></div></div>
+</article></sc-for></div></section>
+
+<section id="bulk" style="background:var(--color-neutral-900);color:#f3f2f2">
+<div style="max-width:1240px;margin:0 auto;padding:110px 32px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px;margin-bottom:56px">
+<div><div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-300)">Wholesale</div>
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(44px,5vw,72px);line-height:1;margin:14px 0 0">Order in bulk</h2></div>
+<div><p style="font-size:16px;line-height:1.8;text-align:justify;margin:0 0 20px;color:#d9d6d0">For cafés, studios and gifting. Set a quantity of 250g tins against each tea; the discount follows the size of each line.</p>
+<div style="display:flex;gap:28px;font-family:var(--font-heading);font-size:22px"><span><span style="color:var(--color-accent-300)">10+</span> −10%</span><span><span style="color:var(--color-accent-300)">25+</span> −15%</span><span><span style="color:var(--color-accent-300)">50+</span> −20%</span></div></div></div>
+<div style="border-top:1px solid rgba(243,242,242,.2)">
+<sc-for list="{{ bulkRows }}" as="b" hint-placeholder-count="6">
+<div style="display:grid;grid-template-columns:72px 1fr auto 130px;gap:24px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(243,242,242,.2)">
+<img src="{{ b.image }}" alt="" style="width:72px;height:54px;object-fit:cover;display:block">
+<div><div style="font-family:var(--font-heading);font-size:24px">{{ b.name }}</div><div style="font-size:12px;color:#b9b5ad">{{ b.unit }} per 250g tin <span style="color:var(--color-accent-300)">{{ b.tier }}</span></div></div>
+<div style="display:flex;align-items:center;border:1px solid rgba(243,242,242,.35)"><button onClick="{{ b.dec }}" style="width:38px;height:38px;background:none;border:0;color:#f3f2f2;font-size:18px;cursor:pointer">−</button><input type="number" min="0" value="{{ b.qty }}" onInput="{{ b.set }}" style="width:56px;height:38px;text-align:center;background:none;border:0;color:#f3f2f2;font-family:var(--font-body);font-size:15px"><button onClick="{{ b.inc }}" style="width:38px;height:38px;background:none;border:0;color:#f3f2f2;font-size:18px;cursor:pointer">+</button></div>
+<div style="text-align:right;font-family:var(--font-heading);font-size:24px;font-variant-numeric:tabular-nums">{{ b.line }}</div></div></sc-for></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:32px">
+<div style="display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#b9b5ad">Fill every tea
+<button onClick="{{ fill10 }}" class="btn btn-ghost" style="color:#f3f2f2">10</button><button onClick="{{ fill25 }}" class="btn btn-ghost" style="color:#f3f2f2">25</button><button onClick="{{ fill50 }}" class="btn btn-ghost" style="color:#f3f2f2">50</button></div>
+<div style="display:flex;gap:28px;align-items:center"><div style="text-align:right"><div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#b9b5ad">{{ bulkTins }} tins · saving {{ bulkSaving }}</div><div style="font-family:var(--font-heading);font-size:36px;font-variant-numeric:tabular-nums">{{ bulkTotal }}</div></div>
+<button onClick="{{ addBulk }}" class="btn btn-primary" style="color:var(--color-accent-300);border-color:var(--color-accent-300);padding:14px 28px">Add to bag</button></div></div>
+</div></section>
+
+<footer style="max-width:1240px;margin:0 auto;padding:72px 32px 56px;display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;font-size:13px;color:var(--color-neutral-600)">
+<div><div style="font-family:var(--font-heading);font-size:26px;letter-spacing:.22em;color:var(--color-text)">THE ROOTS</div><p style="max-width:340px;line-height:1.7">Pure stone-ground tea powders, from estate to table.</p></div>
+<div>© 2026 The Roots Tea Estate. A prototype.</div></footer>
+</div>
+
+<main style="display:{{ adminDisplay }};max-width:1240px;margin:0 auto;padding:56px 32px 100px">
+<div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">Estate office</div>
+<h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(44px,5vw,72px);line-height:1;margin:14px 0 40px">Dashboard</h1>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
+<sc-for list="{{ stats }}" as="s" hint-placeholder-count="4"><div style="padding:28px 24px 28px 0"><div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-neutral-600)">{{ s.label }}</div><div style="font-family:var(--font-heading);font-size:44px;margin-top:8px;font-variant-numeric:tabular-nums">{{ s.value }}</div></div></sc-for></div>
+<div style="display:flex;gap:32px;margin:48px 0 8px;border-bottom:1px solid var(--color-divider)">
+<sc-for list="{{ adminTabs }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button></sc-for></div>
+
+<table class="table" style="width:100%;display:{{ tabOrders }};text-align:left"><thead><tr><th>Order</th><th>Customer</th><th>Type</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>
+<sc-for list="{{ orderRows }}" as="o" hint-placeholder-count="3"><tr><td style="font-variant-numeric:tabular-nums">{{ o.id }}</td><td>{{ o.customer }}</td><td><span class="tag tag-outline">{{ o.type }}</span></td><td style="max-width:320px;color:var(--color-neutral-700)">{{ o.items }}</td><td style="font-variant-numeric:tabular-nums">{{ o.total }}</td>
+<td><select onChange="{{ o.setStatus }}" class="input" style="padding:6px 10px"><option selected="{{ o.isP }}">Processing</option><option selected="{{ o.isS }}">Shipped</option><option selected="{{ o.isD }}">Delivered</option></select></td></tr></sc-for></tbody></table>
+
+<table class="table" style="width:100%;display:{{ tabStock }};text-align:left"><thead><tr><th>Tea</th><th>Category</th><th>250g price</th><th>Stock (tins)</th></tr></thead><tbody>
+<sc-for list="{{ stockRows }}" as="r" hint-placeholder-count="6"><tr><td style="font-family:var(--font-heading);font-size:20px">{{ r.name }}</td><td>{{ r.cat }}</td><td style="font-variant-numeric:tabular-nums">{{ r.price }}</td>
+<td><div style="display:flex;align-items:center;gap:12px"><button onClick="{{ r.dec }}" class="btn btn-ghost btn-icon">−</button><span style="min-width:36px;text-align:center;font-variant-numeric:tabular-nums;color:{{ r.stockColor }}">{{ r.stock }}</span><button onClick="{{ r.inc }}" class="btn btn-ghost btn-icon">+</button></div></td></tr></sc-for></tbody></table>
+
+<table class="table" style="width:100%;display:{{ tabCust }};text-align:left"><thead><tr><th>Name</th><th>Email</th><th>Account</th><th>Orders</th></tr></thead><tbody>
+<sc-for list="{{ customers }}" as="c" hint-placeholder-count="3"><tr><td>{{ c.name }}</td><td>{{ c.email }}</td><td><span class="tag tag-outline">{{ c.kind }}</span></td><td style="font-variant-numeric:tabular-nums">{{ c.orders }}</td></tr></sc-for></tbody></table>
+</main>
+
+<div style="position:fixed;inset:0;z-index:60;display:{{ cartDisplay }}">
+<div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(20,19,16,.55)"></div>
+<aside style="position:absolute;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--color-bg);border-left:1px solid var(--color-divider);display:flex;flex-direction:column">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:24px 28px;border-bottom:1px solid var(--color-divider)"><h3 style="font-family:var(--font-heading);font-weight:500;font-size:32px;margin:0">Your bag</h3><button onClick="{{ closeCart }}" class="btn btn-ghost btn-icon">×</button></div>
+<div style="flex:1;overflow:auto;padding:8px 28px">
+<sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}"><p style="padding:48px 0;text-align:center;color:var(--color-neutral-600)">Your bag is empty.</p></sc-if>
+<sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="0">
+<div style="display:grid;grid-template-columns:64px 1fr auto;gap:16px;padding:20px 0;border-bottom:1px solid var(--color-divider);align-items:center">
+<img src="{{ l.image }}" alt="" style="width:64px;height:64px;object-fit:cover">
+<div><div style="font-family:var(--font-heading);font-size:20px;line-height:1.15">{{ l.name }}</div><div style="font-size:12px;color:var(--color-neutral-600);margin:4px 0 10px">{{ l.meta }}</div>
+<div style="display:flex;align-items:center;gap:10px"><button onClick="{{ l.dec }}" class="btn btn-ghost btn-icon">−</button><span style="min-width:24px;text-align:center">{{ l.qty }}</span><button onClick="{{ l.inc }}" class="btn btn-ghost btn-icon">+</button></div></div>
+<div style="text-align:right"><div style="font-family:var(--font-heading);font-size:22px;font-variant-numeric:tabular-nums">{{ l.total }}</div><button onClick="{{ l.remove }}" style="background:none;border:0;padding:6px 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600);cursor:pointer">Remove</button></div></div></sc-for></div>
+<div style="padding:24px 28px;border-top:1px solid var(--color-divider)">
+<div style="display:flex;justify-content:space-between;font-size:14px;color:var(--color-neutral-700);margin-bottom:6px"><span>Wholesale saving</span><span>−{{ cartSaving }}</span></div>
+<div style="display:flex;justify-content:space-between;font-family:var(--font-heading);font-size:30px;margin-bottom:20px"><span>Total</span><span style="font-variant-numeric:tabular-nums">{{ cartTotal }}</span></div>
+<button onClick="{{ openCheckout }}" class="btn btn-primary btn-block" style="padding:14px">Proceed to checkout</button></div></aside></div>
+
+<div style="position:fixed;inset:0;z-index:70;display:{{ prodDisplay }};align-items:center;justify-content:center;padding:24px">
+<div onClick="{{ closeProd }}" style="position:absolute;inset:0;background:rgba(20,19,16,.6)"></div>
+<div style="position:relative;background:var(--color-bg);border:1px solid var(--color-divider);max-width:900px;width:100%;max-height:92vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));box-shadow:var(--shadow-lg)">
+<div style="padding:28px"><div class="plate"><img src="{{ mImage }}" alt="" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover"></div></div>
+<div style="padding:36px 36px 36px 8px;display:flex;flex-direction:column;gap:18px">
+<button onClick="{{ closeProd }}" class="btn btn-ghost btn-icon" style="align-self:flex-end">×</button>
+<div><div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--color-accent-700)">{{ mOrigin }}</div><h3 style="font-family:var(--font-heading);font-weight:500;font-size:38px;line-height:1.05;margin:8px 0 12px">{{ mName }}</h3><p style="font-size:14.5px;line-height:1.7;text-align:justify;margin:0">{{ mDesc }}</p></div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{ mSizes }}" as="z" hint-placeholder-count="3"><button onClick="{{ z.pick }}" style="{{ z.style }}">{{ z.label }}</button></sc-for></div>
+<div style="font-family:var(--font-heading);font-size:40px;font-variant-numeric:tabular-nums">{{ mPrice }}</div>
+<div style="display:flex;gap:12px;align-items:center"><div style="display:flex;align-items:center;border:1px solid var(--color-divider)"><button onClick="{{ mDec }}" style="width:40px;height:44px;background:none;border:0;cursor:pointer;font-size:18px">−</button><span style="min-width:30px;text-align:center">{{ mQty }}</span><button onClick="{{ mInc }}" style="width:40px;height:44px;background:none;border:0;cursor:pointer;font-size:18px">+</button></div><button onClick="{{ mAdd }}" class="btn btn-primary" style="flex:1;padding:12px">Add to bag</button></div>
+</div></div></div>
+
+<div style="position:fixed;inset:0;z-index:80;display:{{ coDisplay }};align-items:center;justify-content:center;padding:24px">
+<div onClick="{{ closeCheckout }}" style="position:absolute;inset:0;background:rgba(20,19,16,.6)"></div>
+<form onSubmit="{{ placeOrder }}" style="position:relative;background:var(--color-bg);border:1px solid var(--color-divider);max-width:520px;width:100%;padding:40px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-lg)">
+<h3 style="font-family:var(--font-heading);font-weight:500;font-size:36px;margin:0">Checkout</h3>
+<div class="field"><label>Name</label><input class="input" required value="{{ coName }}" onInput="{{ setCoName }}"></div>
+<div class="field"><label>Email</label><input class="input" type="email" required value="{{ coEmail }}" onInput="{{ setCoEmail }}"></div>
+<div class="field"><label>Delivery address</label><input class="input" required value="{{ coAddr }}" onInput="{{ setCoAddr }}"></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--color-divider);padding-top:18px"><span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase">{{ coType }} order</span><span style="font-family:var(--font-heading);font-size:34px;font-variant-numeric:tabular-nums">{{ cartTotal }}</span></div>
+<div style="display:flex;gap:12px"><button type="button" onClick="{{ closeCheckout }}" class="btn btn-ghost">Cancel</button><button type="submit" class="btn btn-primary" style="flex:1;padding:12px">Place order</button></div></form></div>
+
+<div style="position:fixed;inset:0;z-index:90;display:{{ doneDisplay }};align-items:center;justify-content:center;padding:24px">
+<div onClick="{{ closeDone }}" style="position:absolute;inset:0;background:rgba(20,19,16,.6)"></div>
+<div style="position:relative;background:var(--color-bg);border:1px solid var(--color-accent);max-width:440px;width:100%;padding:48px 40px;text-align:center">
+<div style="font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--color-accent-700)">Thank you</div>
+<h3 style="font-family:var(--font-heading);font-weight:400;font-size:44px;margin:14px 0">Order confirmed</h3>
+<p style="font-family:var(--font-heading);font-size:26px;color:var(--color-accent-700);margin:0 0 28px;font-variant-numeric:tabular-nums">#{{ doneId }}</p>
+<button onClick="{{ closeDone }}" class="btn btn-primary">Back to the store</button></div></div>
+
+<div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:100;background:var(--color-neutral-900);color:#f3f2f2;padding:12px 24px;font-size:13px;letter-spacing:.06em;border:1px solid var(--color-accent-300);opacity:{{ toastOp }};pointer-events:none;transition:opacity .35s">{{ toast }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  vidRef = React.createRef(); canvasRef = React.createRef(); secRef = React.createRef(); barRef = React.createRef();
+  ch1 = React.createRef(); ch2 = React.createRef(); ch3 = React.createRef();
+  P = [
+    { id: 'matcha', name: 'Ceremonial Matcha', cat: 'Green', price: 54, origin: 'Uji, Kyoto', image: 'uploads/matcha.jpg', desc: 'Shade-grown first-flush tencha, stone-ground to a silken emerald powder with deep umami and a clean, sweet finish.' },
+    { id: 'sencha', name: 'Jade Cloud Sencha', cat: 'Green', price: 46, origin: 'Kagoshima', image: 'uploads/sencha.jpg', desc: 'Early-spring sencha milled whole: vivid in the bowl, rich in chlorophyll and L-theanine, bright and grassy on the palate.' },
+    { id: 'hojicha', name: 'Hojicha', cat: 'Roasted', price: 38, origin: 'Shizuoka', image: 'uploads/hojicha.jpg', desc: 'Slow-roasted Japanese tea ground to a cocoa-bronze powder. Toasted, nutty and gentle enough for the evening.' },
+    { id: 'assam', name: 'Assam Black', cat: 'Black', price: 42, origin: 'Assam Valley', image: 'uploads/black.jpg', desc: 'Whole-leaf black tea milled fine. Malt, honey and a velvety body that makes an exceptional latte.' },
+    { id: 'earl', name: 'Earl Grey Micro-Ground', cat: 'Black', price: 44, origin: 'Highland Ceylon', image: 'uploads/earlgrey.jpg', desc: 'Ceylon black tea ground with cold-pressed bergamot rind. Perfumed, bright and citrus-sweet.' },
+    { id: 'peony', name: 'White Peony', cat: 'White', price: 62, origin: 'Fuding, Fujian', image: 'uploads/white.jpg', desc: 'Rare white buds micro-milled cold to keep their melon and wild-orchid notes. Ultra-fine and delicate.' }
+  ];
+  SZ = [{ g: 100, m: 0.5 }, { g: 250, m: 1 }, { g: 500, m: 1.8 }];
+  state = { role: 'customer', filter: 'All', cart: [], cartOpen: false, modal: null, mSize: 250, mQty: 1, bulk: {}, co: false, coName: 'Eleanor Vance', coEmail: 'eleanor@vance.com', coAddr: '742 Evergreen Terrace', doneId: null, toast: '', adminTab: 'orders',
+    stock: { matcha: 120, sencha: 90, hojicha: 14, assam: 160, earl: 75, peony: 40 },
+    orders: [
+      { id: 'ROOTS-98421', customer: 'Eleanor Vance', type: 'Single', items: 'Ceremonial Matcha 100g × 1', total: 27, status: 'Processing' },
+      { id: 'ROOTS-98418', customer: 'Julian Thorne', type: 'Single', items: 'Hojicha 250g × 2', total: 76, status: 'Shipped' },
+      { id: 'ROOTS-98402', customer: 'Kettle & Leaf Café', type: 'Bulk', items: 'Assam Black 250g × 30, Earl Grey 250g × 25', total: 2064, status: 'Delivered' }
+    ] };
+  money = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  disc = q => q >= 50 ? 0.2 : q >= 25 ? 0.15 : q >= 10 ? 0.1 : 0;
+  prod = id => this.P.find(p => p.id === id);
+  unit = l => { const p = this.prod(l.id); const s = this.SZ.find(z => z.g === l.size); return p.price * s.m * (l.mode === 'bulk' ? 1 - this.disc(l.qty) : 1); };
+  flash = msg => { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 2600); };
+  addLine = (id, size, qty, mode) => this.setState(s => {
+    const cart = s.cart.map(l => ({ ...l })); const k = cart.find(l => l.id === id && l.size === size && l.mode === mode);
+    if (k) k.qty += qty; else cart.push({ id, size, qty, mode }); return { cart };
+  });
+  chg = (i, d) => this.setState(s => { const cart = s.cart.map(l => ({ ...l })); cart[i].qty += d; return { cart: cart.filter(l => l.qty > 0) }; });
+  setBulk = (id, q) => this.setState(s => ({ bulk: { ...s.bulk, [id]: Math.max(0, q | 0) } }));
+  fillAll = q => this.setState({ bulk: Object.fromEntries(this.P.map(p => [p.id, q])) });
+  boot() {
+    this._tgt = 0; this._cur = 0; this._seek = false;
+    const g = i => document.getElementById(i);
+    const show = (el, on) => { if (!el) return; el.style.opacity = on ? 1 : 0; el.style.transform = on ? 'none' : 'translateY(24px)'; };
+    const loop = () => {
+      const v = g('rv'), c = g('rc'); if (!v || !c) return;
+      if (v !== this._v) {
+        this._v = v; this._seek = false;
+        v.addEventListener('seeked', () => { this._seek = false; });
+        v.addEventListener('loadeddata', () => { try { v.currentTime = 0.01; } catch (e) {} });
+        if (v.readyState >= 2) { try { v.currentTime = 0.01; } catch (e) {} }
+      }
+      const sec = g('story');
+      if (sec && v.duration) {
+        const r = sec.getBoundingClientRect(), tot = sec.offsetHeight - (window.innerHeight - 73);
+        if (tot > 0) {
+          const p = Math.max(0, Math.min(1, -r.top / tot)); this._tgt = p * v.duration;
+          if (g('rbar')) g('rbar').style.width = p * 100 + '%';
+          show(g('rch1'), p < 0.24); show(g('rch2'), p >= 0.28 && p < 0.62); show(g('rch3'), p >= 0.68);
+        }
+        this._cur += (this._tgt - this._cur) * 0.14;
+      }
+      const w = c.clientWidth, h = c.clientHeight; if (!w || !h || v.readyState < 2) return;
+      if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+      const va = (v.videoWidth || 16) / (v.videoHeight || 9), ca = w / h; let dw, dh;
+      if (ca > va) { dw = w; dh = w / va; } else { dh = h; dw = h * va; }
+      const x = c.getContext('2d'), F = this._frames;
+      if (F && v.duration) {
+        const pos = Math.max(0, Math.min(F.length - 1, (this._cur / v.duration) * (F.length - 1))), i = Math.floor(pos), fr = pos - i;
+        const put = (b, a) => { x.globalAlpha = a; x.drawImage(b, (w - dw) / 2, (h - dh) / 2, dw, dh); };
+        put(F[i], 1); if (fr > 0.01 && F[i + 1]) put(F[i + 1], fr); x.globalAlpha = 1;
+      } else if (!this._extracting) x.drawImage(v, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    };
+    const extract = async () => {
+      const v = g('rv'); if (!v || this._extracting || this._frames) return; this._extracting = true;
+      if (!v.duration) await new Promise(res => v.addEventListener('loadedmetadata', res, { once: true }));
+      const N = 120, out = [];
+      for (let i = 0; i < N; i++) {
+        await new Promise(res => { v.addEventListener('seeked', res, { once: true }); v.currentTime = Math.min(v.duration - 0.05, (i / (N - 1)) * v.duration); });
+        out.push(await createImageBitmap(v, { resizeWidth: 1280, resizeQuality: 'medium' }));
+      }
+      this._frames = out; this._extracting = false;
+    };
+    setTimeout(extract, 300);
+    this._iv = setInterval(loop, 33); window.addEventListener('scroll', loop, { passive: true }); this._loop = loop; loop();
+  }
+  componentWillUnmount() { clearInterval(this._iv); window.removeEventListener('scroll', this._loop); }
+  renderVals() {
+    if (!this._started) { this._started = true; setTimeout(() => this.boot(), 0); }
+    const s = this.state, M = this.money, cust = s.role === 'customer', set = o => this.setState(o);
+    const pill = (on) => `padding:9px 20px;font-family:var(--font-body);font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border:1px solid ${on ? 'var(--color-accent)' : 'var(--color-divider)'};background:transparent;color:${on ? 'var(--color-accent-700)' : 'var(--color-text)'}`;
+    const cats = ['All', 'Green', 'Roasted', 'Black', 'White'];
+    const lines = s.cart.map((l, i) => { const p = this.prod(l.id), u = this.unit(l); return { l, i, p, u }; });
+    const subtotalList = lines.reduce((a, x) => a + this.prod(x.l.id).price * this.SZ.find(z => z.g === x.l.size).m * x.l.qty, 0);
+    const total = lines.reduce((a, x) => a + x.u * x.l.qty, 0);
+    const m = s.modal ? this.prod(s.modal) : null, ms = this.SZ.find(z => z.g === s.mSize);
+    const bulkTins = this.P.reduce((a, p) => a + (s.bulk[p.id] || 0), 0);
+    const bulkTotal = this.P.reduce((a, p) => { const q = s.bulk[p.id] || 0; return a + p.price * q * (1 - this.disc(q)); }, 0);
+    const bulkList = this.P.reduce((a, p) => a + p.price * (s.bulk[p.id] || 0), 0);
+    const tabs = [['orders', 'Orders'], ['stock', 'Inventory'], ['cust', 'Customers']];
+    const revenue = s.orders.reduce((a, o) => a + o.total, 0);
+    const custs = [{ name: 'Eleanor Vance', email: 'eleanor@vance.com', kind: 'Retail', orders: 4 }, { name: 'Julian Thorne', email: 'julian@thorne.com', kind: 'Retail', orders: 8 }, { name: 'Kettle & Leaf Café', email: 'orders@kettleleaf.com', kind: 'Wholesale', orders: 12 }, { name: 'Hitoshi Tanaka', email: 'admin@theroots.com', kind: 'Admin', orders: 0 }];
+    const hasBulk = s.cart.some(l => l.mode === 'bulk');
+    return {
+      custDisplay: cust ? 'block' : 'none', custDisplayFlex: cust ? 'flex' : 'none', adminDisplay: cust ? 'none' : 'block',
+      
+      roleBtnC: pill(cust) + ';border:0', roleBtnA: pill(!cust) + ';border:0',
+      goCustomer: () => set({ role: 'customer' }), goAdmin: () => { set({ role: 'admin', cartOpen: false }); window.scrollTo(0, 0); },
+      openCart: () => set({ cartOpen: true }), closeCart: () => set({ cartOpen: false }),
+      cartCount: s.cart.reduce((a, l) => a + l.qty, 0),
+      filters: cats.map(c => ({ label: c, pick: () => set({ filter: c }), style: pill(s.filter === c) })),
+      shown: this.P.filter(p => s.filter === 'All' || p.cat === s.filter).map(p => ({
+        ...p, priceFrom: 'from ' + M(p.price * 0.5), open: () => set({ modal: p.id, mSize: 250, mQty: 1 }),
+        quick: () => { this.addLine(p.id, 250, 1, 'single'); this.flash(p.name + ' added to your bag'); } })),
+      bulkRows: this.P.map(p => { const q = s.bulk[p.id] || 0, d = this.disc(q); return {
+        name: p.name, image: p.image, unit: M(p.price), qty: q, tier: d ? `· −${d * 100}% applied` : '',
+        line: q ? M(p.price * q * (1 - d)) : '—', dec: () => this.setBulk(p.id, q - 1), inc: () => this.setBulk(p.id, q + 1), set: e => this.setBulk(p.id, +e.target.value) }; }),
+      fill10: () => this.fillAll(10), fill25: () => this.fillAll(25), fill50: () => this.fillAll(50),
+      bulkTins, bulkTotal: M(bulkTotal), bulkSaving: M(bulkList - bulkTotal),
+      addBulk: () => { if (!bulkTins) return this.flash('Set a quantity first');
+        this.P.forEach(p => { const q = s.bulk[p.id] || 0; if (q) this.addLine(p.id, 250, q, 'bulk'); });
+        set({ bulk: {}, cartOpen: true }); this.flash('Wholesale order added to your bag'); },
+      cartDisplay: s.cartOpen ? 'block' : 'none', cartEmpty: s.cart.length === 0,
+      cartLines: lines.map(({ l, i, p, u }) => ({ name: p.name, image: p.image, qty: l.qty, total: M(u * l.qty),
+        meta: `${l.size}g · ${M(u)} each` + (l.mode === 'bulk' ? ` · wholesale${this.disc(l.qty) ? ' −' + this.disc(l.qty) * 100 + '%' : ''}` : ''),
+        dec: () => this.chg(i, -1), inc: () => this.chg(i, 1), remove: () => this.chg(i, -1e6) })),
+      cartSaving: M(subtotalList - total), cartTotal: M(total),
+      openCheckout: () => { if (!s.cart.length) return this.flash('Your bag is empty'); set({ cartOpen: false, co: true }); },
+      coDisplay: s.co ? 'flex' : 'none', closeCheckout: () => set({ co: false }), coType: hasBulk ? 'Wholesale' : 'Single',
+      coName: s.coName, coEmail: s.coEmail, coAddr: s.coAddr,
+      setCoName: e => set({ coName: e.target.value }), setCoEmail: e => set({ coEmail: e.target.value }), setCoAddr: e => set({ coAddr: e.target.value }),
+      placeOrder: e => { e.preventDefault();
+        const id = 'ROOTS-' + Math.floor(10000 + Math.random() * 90000);
+        const stock = { ...s.stock }; s.cart.forEach(l => { stock[l.id] = Math.max(0, stock[l.id] - Math.ceil(l.qty * this.SZ.find(z => z.g === l.size).g / 250)); });
+        const o = { id, customer: s.coName, type: hasBulk ? 'Bulk' : 'Single', items: s.cart.map(l => `${this.prod(l.id).name} ${l.size}g × ${l.qty}`).join(', '), total: total, status: 'Processing' };
+        set({ orders: [o, ...s.orders], stock, cart: [], co: false, doneId: id }); },
+      doneDisplay: s.doneId ? 'flex' : 'none', doneId: s.doneId || '', closeDone: () => set({ doneId: null }),
+      prodDisplay: m ? 'flex' : 'none', closeProd: () => set({ modal: null }),
+      mImage: m ? m.image : '', mName: m ? m.name : '', mOrigin: m ? m.origin : '', mDesc: m ? m.desc : '',
+      mSizes: this.SZ.map(z => ({ label: z.g + 'g', pick: () => set({ mSize: z.g }), style: pill(s.mSize === z.g) + ';flex:1' })),
+      mPrice: m ? M(m.price * ms.m * s.mQty) : '', mQty: s.mQty,
+      mDec: () => set({ mQty: Math.max(1, s.mQty - 1) }), mInc: () => set({ mQty: s.mQty + 1 }),
+      mAdd: () => { this.addLine(m.id, s.mSize, s.mQty, 'single'); set({ modal: null }); this.flash(`${m.name} ${s.mSize}g added to your bag`); },
+      toast: s.toast, toastOp: s.toast ? 1 : 0,
+      stats: [{ label: 'Revenue', value: M(revenue) }, { label: 'Orders', value: s.orders.length }, { label: 'Bulk orders', value: s.orders.filter(o => o.type === 'Bulk').length }, { label: 'Low stock', value: this.P.filter(p => s.stock[p.id] < 20).length }],
+      adminTabs: tabs.map(([k, label]) => ({ label, pick: () => set({ adminTab: k }),
+        style: `padding:0 0 14px;background:none;border:0;border-bottom:1px solid ${s.adminTab === k ? 'var(--color-accent)' : 'transparent'};margin-bottom:-1px;font-family:var(--font-body);font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;color:${s.adminTab === k ? 'var(--color-accent-700)' : 'var(--color-neutral-600)'}` })),
+      tabOrders: s.adminTab === 'orders' ? 'table' : 'none', tabStock: s.adminTab === 'stock' ? 'table' : 'none', tabCust: s.adminTab === 'cust' ? 'table' : 'none',
+      orderRows: s.orders.map(o => ({ ...o, total: M(o.total), isP: o.status === 'Processing', isS: o.status === 'Shipped', isD: o.status === 'Delivered',
+        setStatus: e => { const v = e.target.value; set({ orders: s.orders.map(x => x.id === o.id ? { ...x, status: v } : x) }); this.flash(`${o.id} marked ${v}`); } })),
+      stockRows: this.P.map(p => ({ name: p.name, cat: p.cat, price: M(p.price), stock: s.stock[p.id], stockColor: s.stock[p.id] < 20 ? 'var(--color-accent-700)' : 'inherit',
+        dec: () => set({ stock: { ...s.stock, [p.id]: Math.max(0, s.stock[p.id] - 10) } }), inc: () => set({ stock: { ...s.stock, [p.id]: s.stock[p.id] + 10 } }) })),
+      customers: custs
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ext-resource-dependency" content="uploads/matcha.jpg" data-resource-id="matcha" />
+<meta name="ext-resource-dependency" content="uploads/sencha.jpg" data-resource-id="sencha" />
+<meta name="ext-resource-dependency" content="uploads/hojicha.jpg" data-resource-id="hojicha" />
+<meta name="ext-resource-dependency" content="uploads/black.jpg" data-resource-id="black" />
+<meta name="ext-resource-dependency" content="uploads/earlgrey.jpg" data-resource-id="earlgrey" />
+<meta name="ext-resource-dependency" content="uploads/white.jpg" data-resource-id="white" />
+<template id="__bundler_thumbnail" data-bg-color="#f4f0e4"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#f4f0e4"/><circle cx="600" cy="400" r="190" fill="#d4ad5a"/><text x="600" y="440" font-size="130" text-anchor="middle" font-family="Georgia,serif" font-weight="700" fill="#14301f">TR</text></svg></template>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-c4aed045-c9d4-4d7f-a017-3d879a9e8aca/styles.css">
+<script src="_ds/classical-c4aed045-c9d4-4d7f-a017-3d879a9e8aca/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap">
+<style>body{margin:0}a{color:#2f6b3a;text-decoration:none}a:hover{color:#14301f}.rt .btn{white-space:nowrap;border-radius:999px;font-weight:600;letter-spacing:.04em}.rt .btn-primary{background:#14301f;color:#f4f0e4;border-color:#14301f}.rt .btn-primary:hover{background:var(--pop);color:#14301f}.rt .btn-ghost{border-radius:999px}.rt input,.rt select{border-radius:14px}input[type=number]{-moz-appearance:textfield}select option{color:#201f1d}@keyframes rtm{to{transform:translateX(-50%)}}body{overflow-x:clip}.rt-aside button{white-space:nowrap}
+@media(max-width:900px){.rt-admin{grid-template-columns:minmax(0,1fr) !important}.rt-aside{flex-direction:row !important;overflow-x:auto;border-right:0 !important;border-bottom:1px solid var(--color-divider);padding:6px 8px !important}.rt-aside button{padding:12px 16px !important;border-left:0 !important}.rt-hide{display:none !important}.rt-asec{padding:28px 18px 80px !important}.rt .table{display:block;overflow-x:auto;white-space:nowrap}}
+@media(max-width:820px){.rt-hdr{padding:0 16px !important;gap:10px !important}.rt-tag,.rt-nav{display:none !important}.rt-acts{gap:8px !important}.rt-acts .btn{padding:8px 14px !important;font-size:12px}.rt-pad{padding-left:18px !important;padding-right:18px !important}section.rt-pad{padding-top:64px !important;padding-bottom:64px !important}.rt main{padding-left:18px !important;padding-right:18px !important}.rt [style*="gap:64px"]{gap:36px !important}.rt-limg{min-height:220px !important}.rt-brow{grid-template-columns:56px minmax(0,1fr) auto !important;gap:14px !important}.rt-brow>img{width:56px !important;height:44px !important}.rt-brow>:nth-child(3){grid-column:1 / 3}.rt-brow>:nth-child(4){grid-column:3;grid-row:3}.rt-form2{grid-template-columns:1fr !important}.rt-form2>*{grid-column:auto !important}.rt-track>div{font-size:9px !important;letter-spacing:.06em !important}}</style>
+</helmet>
+<div class="rt" style="{{ rootStyle }}">
+
+<header style="position:sticky;top:0;z-index:40;background:var(--color-bg);border-bottom:1px solid var(--color-divider)">
+<div class="rt-hdr" style="max-width:1280px;margin:0 auto;padding:0 32px;min-height:72px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px">
+<button onClick="{{ goHome }}" style="background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;line-height:1;color:var(--color-text)">
+<span style="font-family:var(--font-heading);font-size:30px;letter-spacing:.06em;font-weight:800">THE ROOTS</span>
+<span class="rt-tag" style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--color-accent-700);margin-top:6px">Stone-ground tea powder</span></button>
+<nav class="rt-nav" style="display:{{ navDisplay }};gap:32px">
+<button onClick="{{ navStory }}" style="{{ navBtn }}">Story</button><button onClick="{{ navOrigin }}" style="{{ navBtn }}">Origin</button><button onClick="{{ navCollection }}" style="{{ navBtn }}">Collection</button><button onClick="{{ navBulk }}" style="{{ navBtn }}">Wholesale</button></nav>
+<div class="rt-acts" style="display:flex;align-items:center;gap:14px">
+<sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}"><button onClick="{{ goLogin }}" class="btn btn-ghost">Sign in</button></sc-if>
+<sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goAccount }}" class="btn btn-ghost">{{ accountLabel }}</button><button onClick="{{ logout }}" class="btn btn-ghost">Sign out</button></sc-if>
+<button onClick="{{ openCart }}" class="btn btn-secondary" style="display:{{ bagDisplay }}">Bag ({{ cartCount }})</button></div></div></header>
+
+<div id="top" style="display:{{ dHome }}">
+<section id="story" style="height:450vh;position:relative">
+<div style="position:sticky;top:73px;height:calc(100vh - 73px);overflow:hidden;background:var(--color-neutral-900)">
+<video id="rv" muted playsinline preload="auto" src="uploads/video.mp4" style="position:absolute;width:2px;height:2px;opacity:0;pointer-events:none"></video>
+<canvas id="rc" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,26,18,.6),rgba(10,26,18,.15) 40%,rgba(10,26,18,.75))"></div>
+<div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(24px,7vw,120px);color:#f3efe2">
+<div id="rch1" style="position:absolute;max-width:660px;transition:opacity .7s,transform .7s">
+<div style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--color-accent-300)">Harvest MMXXVI</div>
+<h1 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(48px,8vw,104px);line-height:1;margin:20px 0">A ritual worth <span style="color:var(--color-accent-300)">savouring.</span></h1>
+<p style="font-size:17px;line-height:1.7;max-width:480px;margin:0 0 32px;font-weight:300">Tea ground on granite to the fineness of silk, sealed in lightproof tins and sent from our estate to your table.</p>
+<button onClick="{{ navCollection }}" class="btn btn-secondary" style="color:#f3efe2;border-color:var(--color-accent-300);white-space:nowrap">Shop the collection</button></div>
+<div id="rch2" style="position:absolute;max-width:520px;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s">
+<div style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--color-accent-300)">Chapter I</div>
+<h2 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(40px,6vw,76px);line-height:1.02;margin:18px 0">Craft &amp; story</h2>
+<div style="width:56px;border-top:1px solid var(--color-accent-300);margin-bottom:20px"></div>
+<p style="font-size:16px;line-height:1.75;text-align:justify;margin:0;font-weight:300">Leaves are shade-grown for thirty days, picked by hand and milled on granite stones at thirty grams an hour. Every tin opens to powder that has never met the heat of a machine.</p></div>
+<div id="rch3" style="position:absolute;right:clamp(24px,7vw,120px);max-width:480px;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;text-align:right">
+<div style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--color-accent-300)">Chapter II</div>
+<h2 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(40px,6vw,76px);line-height:1.02;margin:18px 0">The terroir</h2>
+<p style="font-size:16px;line-height:1.75;margin:0 0 28px;font-weight:300">Grown above two thousand metres in volcanic soil and spring-fed mist. Six teas, one estate.</p>
+<button onClick="{{ navCollection }}" class="btn btn-secondary" style="color:#f3efe2;border-color:var(--color-accent-300);white-space:nowrap">Explore the teas</button></div>
+</div>
+<div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);text-align:center;color:#f3efe2;font-size:10px;letter-spacing:.34em;text-transform:uppercase">
+<div style="margin-bottom:10px">Scroll to unfold</div>
+<div style="width:160px;height:1px;background:rgba(243,239,226,.3)"><div id="rbar" style="height:1px;width:0;background:var(--color-accent-300)"></div></div></div>
+</div></section>
+
+<div style="overflow:hidden;background:var(--pop);color:#14301f;border-block:1px solid #14301f"><div style="display:flex;width:max-content;animation:rtm 30s linear infinite;font-family:var(--font-heading);font-weight:800;font-size:30px;letter-spacing:-.02em;padding:16px 0;white-space:nowrap"><span style="padding-right:36px">Stone-ground ✦ Shade-grown ✦ Small-batch ✦ Estate to table ✦ Stone-ground ✦ Shade-grown ✦ Small-batch ✦ Estate to table ✦ </span><span style="padding-right:36px">Stone-ground ✦ Shade-grown ✦ Small-batch ✦ Estate to table ✦ Stone-ground ✦ Shade-grown ✦ Small-batch ✦ Estate to table ✦ </span></div></div>
+<section id="origin" style="max-width:1280px;margin:0 auto;padding:120px 32px" class="rt-pad">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px;align-items:start">
+<div><div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">Origin</div>
+<h2 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(48px,6vw,84px);line-height:1;margin:16px 0 28px">From Uji to your cup</h2>
+<p style="font-size:17px;line-height:1.8;text-align:justify;margin:0;font-weight:300">We buy directly from heritage gardens in Uji, Shizuoka and Kagoshima, and from the high valleys of Assam and Fuding. Cool nights and long mornings of mist give a deep umami and a sweetness no blend can imitate. Nothing is added — no sugar, no flavouring, no colour. Only leaf, ground very slowly.</p></div>
+<div style="background:var(--pop);color:#14301f;border-radius:32px;padding:12px 36px">
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(20,48,31,.25)"><span style="color:#14301f">Harvest elevation</span><span style="font-family:var(--font-heading);font-size:22px">1,800 – 2,400 m</span></div>
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(20,48,31,.25)"><span style="color:#14301f">Milling</span><span style="font-family:var(--font-heading);font-size:22px">Granite, 30 g / hour</span></div>
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(20,48,31,.25)"><span style="color:#14301f">Trade</span><span style="font-family:var(--font-heading);font-size:22px">Direct &amp; organic</span></div>
+<div style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(20,48,31,.25)"><span style="color:#14301f">Packing</span><span style="font-family:var(--font-heading);font-size:22px">Nitrogen-flushed tin</span></div></div>
+</div></section>
+
+<section id="collection" style="max-width:1280px;margin:0 auto;padding:100px 32px" class="rt-pad">
+<div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:56px">
+<div><div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">The reserve</div>
+<h2 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(44px,5vw,72px);line-height:1;margin:14px 0 0">The Collection</h2></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ filters }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button></sc-for></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:56px 40px">
+<sc-for list="{{ shown }}" as="p" hint-placeholder-count="6">
+<article style="display:flex;flex-direction:column;gap:20px;background:{{ p.tint }};padding:16px 20px 22px;border-radius:32px;color:#14301f">
+<button onClick="{{ p.open }}" class="plate" style="padding:0;border:0;background:none;cursor:pointer;display:block;border-radius:22px;overflow:hidden"><img src="{{ p.image }}" alt="{{ p.name }}" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"></button>
+<div><div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--color-accent-700)">{{ p.origin }}</div>
+<h3 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:30px;margin:8px 0 10px;line-height:1.1">{{ p.name }}</h3>
+<p style="font-size:14.5px;line-height:1.7;text-align:justify;margin:0;color:#2e473a">{{ p.desc }}</p></div>
+<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(20,48,31,.25);padding-top:18px;gap:12px;flex-wrap:wrap">
+<span style="font-family:var(--font-heading);font-size:26px;font-variant-numeric:tabular-nums">{{ p.priceFrom }}</span>
+<div style="display:flex;gap:10px"><button onClick="{{ p.open }}" class="btn btn-ghost">Details</button><button onClick="{{ p.quick }}" class="btn btn-primary" style="white-space:nowrap">Add 250g</button></div></div>
+</article></sc-for></div></section>
+
+<section id="bulk" style="background:var(--color-neutral-900);color:#f3efe2">
+<div class="rt-pad" style="max-width:1280px;margin:0 auto;padding:110px 32px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px;margin-bottom:56px">
+<div><div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-300)">Wholesale</div>
+<h2 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(44px,5vw,72px);line-height:1;margin:14px 0 0">Order in bulk</h2></div>
+<div><p style="font-size:16px;line-height:1.8;text-align:justify;margin:0 0 20px;color:#d3dccd;font-weight:300">For cafés, studios and gifting. Set a quantity of 250g tins against each tea; the discount follows the size of each line. Bulk orders ship free.</p>
+<div style="display:flex;gap:28px;font-family:var(--font-heading);font-size:22px;flex-wrap:wrap"><span><span style="color:var(--color-accent-300)">10+</span> −10%</span><span><span style="color:var(--color-accent-300)">25+</span> −15%</span><span><span style="color:var(--color-accent-300)">50+</span> −20%</span></div></div></div>
+<div style="border-top:1px solid rgba(243,239,226,.2)">
+<sc-for list="{{ bulkRows }}" as="b" hint-placeholder-count="6">
+<div class="rt-brow" style="display:grid;grid-template-columns:72px minmax(0,1fr) auto 130px;gap:24px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(243,239,226,.2)">
+<img src="{{ b.image }}" alt="" style="width:72px;height:54px;object-fit:cover;display:block">
+<div><div style="font-family:var(--font-heading);font-size:24px">{{ b.name }}</div><div style="font-size:12px;color:#b9c6b4">{{ b.unit }} per 250g tin <span style="color:var(--color-accent-300)">{{ b.tier }}</span></div></div>
+<div style="display:flex;align-items:center;border:1px solid rgba(243,239,226,.35)"><button onClick="{{ b.dec }}" style="width:38px;height:38px;background:none;border:0;color:#f3efe2;font-size:18px;cursor:pointer">−</button><input type="number" min="0" value="{{ b.qty }}" onInput="{{ b.set }}" style="width:56px;height:38px;text-align:center;background:none;border:0;color:#f3efe2;font-family:var(--font-body);font-size:15px"><button onClick="{{ b.inc }}" style="width:38px;height:38px;background:none;border:0;color:#f3efe2;font-size:18px;cursor:pointer">+</button></div>
+<div style="text-align:right;font-family:var(--font-heading);font-size:22px;font-variant-numeric:tabular-nums">{{ b.line }}</div></div></sc-for></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:32px">
+<div style="display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#b9c6b4">Fill every tea
+<button onClick="{{ fill10 }}" class="btn btn-ghost" style="color:#f3efe2">10</button><button onClick="{{ fill25 }}" class="btn btn-ghost" style="color:#f3efe2">25</button><button onClick="{{ fill50 }}" class="btn btn-ghost" style="color:#f3efe2">50</button></div>
+<div style="display:flex;gap:28px;align-items:center"><div style="text-align:right"><div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#b9c6b4">{{ bulkTins }} tins · saving {{ bulkSaving }}</div><div style="font-family:var(--font-heading);font-size:36px;font-variant-numeric:tabular-nums">{{ bulkTotal }}</div></div>
+<button onClick="{{ addBulk }}" class="btn btn-primary" style="background:var(--pop);color:#14301f;border-color:var(--pop);padding:14px 28px">Add to bag</button></div></div>
+</div></section>
+
+<footer class="rt-pad" style="max-width:1280px;margin:0 auto;padding:72px 32px 56px;display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;font-size:13px;color:var(--color-neutral-600)">
+<div><div style="font-family:var(--font-heading);font-size:26px;letter-spacing:.2em;color:var(--color-text)">THE ROOTS</div><p style="max-width:340px;line-height:1.7">Pure stone-ground tea powders, from estate to table.</p></div>
+<div>© 2026 The Roots Tea Estate. A prototype.</div></footer>
+</div>
+
+<main style="display:{{ dLogin }};min-height:calc(100vh - 80px)">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));min-height:calc(100vh - 80px)">
+<div class="rt-limg" style="position:relative;min-height:360px;background:var(--color-neutral-900)"><img src="uploads/sencha.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85"><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,26,18,.2),rgba(10,26,18,.8))"></div>
+<div style="position:absolute;left:48px;right:48px;bottom:48px;color:#f3efe2"><div style="font-family:var(--font-heading);font-size:clamp(36px,4vw,56px);line-height:1.05">Welcome to the estate.</div><p style="font-weight:300;line-height:1.7;max-width:420px">Sign in to track orders, reorder favourites and unlock wholesale pricing.</p></div></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:48px 32px">
+<form onSubmit="{{ doAuth }}" style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;gap:28px;border-bottom:1px solid var(--color-divider)"><button type="button" onClick="{{ modeLogin }}" style="{{ tabLogin }}">Sign in</button><button type="button" onClick="{{ modeSignup }}" style="{{ tabSignup }}">Create account</button></div>
+<div class="field" style="display:{{ signupDisplay }}"><label>Full name</label><input class="input" value="{{ lfName }}" onInput="{{ setLfName }}"></div>
+<div class="field"><label>Email</label><input class="input" type="email" required value="{{ lfEmail }}" onInput="{{ setLfEmail }}"></div>
+<div class="field"><label>Password</label><input class="input" type="password" required value="{{ lfPass }}" onInput="{{ setLfPass }}"></div>
+<div style="color:#f0a590;font-size:13px;min-height:18px">{{ lerr }}</div>
+<button type="submit" class="btn btn-primary btn-block" style="padding:14px">{{ authLabel }}</button>
+<div style="border:1px solid var(--color-divider);padding:16px 18px;font-size:13px;line-height:1.9;color:var(--color-neutral-700)">
+<div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:6px">Demo accounts</div>
+<div style="display:flex;justify-content:space-between;align-items:center">Customer · customer@theroots.com / customer123<button type="button" onClick="{{ useCust }}" class="btn btn-ghost" style="padding:2px 10px">Use</button></div>
+<div style="display:flex;justify-content:space-between;align-items:center">Admin · admin@theroots.com / admin123<button type="button" onClick="{{ useAdmin }}" class="btn btn-ghost" style="padding:2px 10px">Use</button></div></div>
+</form></div></div></main>
+
+<main style="display:{{ dCheckout }};max-width:1180px;margin:0 auto;padding:56px 32px 100px">
+<div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">Secure checkout</div>
+<h1 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(40px,5vw,64px);line-height:1;margin:14px 0 32px">{{ stepTitle }}</h1>
+<div style="display:flex;gap:0;margin-bottom:48px;border-top:1px solid var(--color-divider)">
+<sc-for list="{{ stepper }}" as="st" hint-placeholder-count="3"><div style="{{ st.style }}"><span style="font-family:var(--font-heading);font-size:22px;margin-right:10px">{{ st.n }}</span>{{ st.label }}</div></sc-for></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:64px;align-items:start">
+<div>
+<form class="rt-form2" onSubmit="{{ submitDetails }}" style="display:{{ step1Display }};grid-template-columns:1fr 1fr;gap:18px">
+<sc-for list="{{ detailFields }}" as="d" hint-placeholder-count="6"><div class="field" style="grid-column:{{ d.span }}"><label>{{ d.label }}</label><input class="input" type="{{ d.type }}" required value="{{ d.val }}" onInput="{{ d.set }}"></div></sc-for>
+<div style="grid-column:1 / -1;display:flex;gap:12px;margin-top:8px"><button type="button" onClick="{{ goHome }}" class="btn btn-ghost">Keep shopping</button><button type="submit" class="btn btn-primary" style="flex:1;padding:14px">Continue to payment</button></div></form>
+<form onSubmit="{{ submitPay }}" style="display:{{ step2Display }};flex-direction:column;gap:20px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px"><sc-for list="{{ payMethods }}" as="pm" hint-placeholder-count="3"><button type="button" onClick="{{ pm.pick }}" style="{{ pm.style }}">{{ pm.label }}</button></sc-for></div>
+<div class="field" style="display:{{ upiDisplay }}"><label>UPI ID</label><input class="input" placeholder="name@bank" value="{{ pfUpi }}" onInput="{{ setUpi }}"></div>
+<div class="rt-form2" style="display:{{ cardDisplay }};grid-template-columns:1fr 1fr;gap:18px">
+<sc-for list="{{ cardFields }}" as="cf" hint-placeholder-count="4"><div class="field" style="grid-column:{{ cf.span }}"><label>{{ cf.label }}</label><input class="input" placeholder="{{ cf.ph }}" value="{{ cf.val }}" onInput="{{ cf.set }}"></div></sc-for></div>
+<p style="display:{{ codDisplay }};margin:0;line-height:1.7;color:var(--color-neutral-700);font-weight:300">Pay in cash when your tins arrive. A ₹50 handling fee is not charged in this prototype.</p>
+<div style="color:#f0a590;font-size:13px;min-height:18px">{{ perr }}</div>
+<div style="display:flex;gap:12px"><button type="button" onClick="{{ backStep }}" class="btn btn-ghost">Back</button><button type="submit" class="btn btn-primary" style="flex:1;padding:14px">{{ payLabel }}</button></div></form></div>
+<aside style="border:1px solid var(--color-divider);padding:28px">
+<div style="font-family:var(--font-heading);font-size:26px;margin-bottom:12px">Order summary</div>
+<sc-for list="{{ sumLines }}" as="l" hint-placeholder-count="2"><div style="display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--color-divider)"><img src="{{ l.image }}" alt="" style="width:48px;height:48px;object-fit:cover"><div><div style="font-family:var(--font-heading);font-size:17px;line-height:1.15">{{ l.name }}</div><div style="font-size:12px;color:var(--color-neutral-600)">{{ l.meta }}</div></div><div style="font-variant-numeric:tabular-nums">{{ l.total }}</div></div></sc-for>
+<div style="padding-top:16px;display:grid;gap:8px;font-size:14px;color:var(--color-neutral-700)">
+<div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>{{ cSub }}</span></div>
+<div style="display:flex;justify-content:space-between"><span>Wholesale saving</span><span>−{{ cDisc }}</span></div>
+<div style="display:flex;justify-content:space-between"><span>GST (5%)</span><span>{{ cGst }}</span></div>
+<div style="display:flex;justify-content:space-between"><span>Shipping</span><span>{{ cShip }}</span></div></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--color-divider);margin-top:14px;padding-top:14px"><span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase">Total</span><span style="font-family:var(--font-heading);font-size:34px;font-variant-numeric:tabular-nums">{{ cTotal }}</span></div>
+<div style="font-size:12px;color:var(--color-neutral-600);margin-top:6px">Free shipping on orders above ₹3,000 and all wholesale orders.</div></aside>
+</div></main>
+
+<main style="display:{{ dDone }};max-width:820px;margin:0 auto;padding:72px 32px 100px;text-align:center">
+<div style="width:72px;height:72px;margin:0 auto 24px;border:1px solid #2f6b3a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:34px;color:var(--color-accent-700)">✓</div>
+<div style="font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--color-accent-700)">Thank you, {{ lastName }}</div>
+<h1 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(40px,6vw,72px);line-height:1;margin:14px 0">Order placed</h1>
+<p style="font-family:var(--font-heading);font-size:28px;color:var(--color-accent-700);margin:0 0 8px;font-variant-numeric:tabular-nums">#{{ lastId }}</p>
+<p style="color:var(--color-neutral-700);margin:0 0 40px;font-weight:300">{{ lastNote }}</p>
+<div class="rt-track" style="display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:40px"><sc-for list="{{ lastSteps }}" as="t" hint-placeholder-count="4"><div style="{{ t.style }}">{{ t.label }}</div></sc-for></div>
+<div style="text-align:left;border:1px solid var(--color-divider);padding:24px 28px;margin-bottom:36px"><sc-for list="{{ lastLines }}" as="l" hint-placeholder-count="1"><div style="display:flex;justify-content:space-between;padding:8px 0;gap:16px"><span>{{ l.text }}</span><span style="font-variant-numeric:tabular-nums">{{ l.total }}</span></div></sc-for>
+<div style="display:flex;justify-content:space-between;border-top:1px solid var(--color-divider);margin-top:10px;padding-top:14px;font-family:var(--font-heading);font-size:24px"><span>Paid via {{ lastPay }}</span><span style="font-variant-numeric:tabular-nums">{{ lastTotal }}</span></div></div>
+<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap"><button onClick="{{ goAccount }}" class="btn btn-primary">View my orders</button><button onClick="{{ goHome }}" class="btn btn-ghost">Continue shopping</button></div></main>
+
+<main style="display:{{ dAccount }};max-width:1080px;margin:0 auto;padding:56px 32px 100px">
+<div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--color-accent-700)">My account</div>
+<h1 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(40px,5vw,64px);line-height:1;margin:14px 0 8px">{{ accName }}</h1>
+<p style="color:var(--color-neutral-600);margin:0 0 48px">{{ accEmail }}</p>
+<div style="display:flex;gap:28px;border-bottom:1px solid var(--color-divider);margin-bottom:32px"><button onClick="{{ accTabOrders }}" style="{{ accTabO }}">Orders</button><button onClick="{{ accTabProfile }}" style="{{ accTabP }}">Profile &amp; settings</button></div>
+<form onSubmit="{{ saveProfile }}" style="display:{{ profDisplay }};grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;max-width:760px">
+<sc-for list="{{ profFields }}" as="d" hint-placeholder-count="7"><div class="field" style="grid-column:{{ d.span }}"><label>{{ d.label }}</label><input class="input" type="{{ d.type }}" placeholder="{{ d.ph }}" value="{{ d.val }}" onInput="{{ d.set }}"></div></sc-for>
+<div class="field" style="grid-column:1 / -1"><label>Email (sign-in)</label><input class="input" value="{{ accEmail }}" disabled="{{ true }}"></div>
+<div style="grid-column:1 / -1;display:flex;gap:12px;align-items:center;margin-top:6px"><button type="submit" class="btn btn-primary" style="padding:12px 28px">Save changes</button><span style="font-size:13px;color:var(--color-neutral-600)">Saved details pre-fill your checkout.</span></div></form>
+<div style="display:{{ ordDisplay }}"><h2 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:30px;margin:0 0 16px">Order history</h2>
+<p style="display:{{ noOrdersDisplay }};color:var(--color-neutral-600)">No orders yet. <button onClick="{{ navCollection }}" style="background:none;border:0;color:var(--color-accent-700);cursor:pointer;text-decoration:underline;font:inherit">Browse the collection</button></p>
+<sc-for list="{{ myOrders }}" as="o" hint-placeholder-count="2">
+<div style="border:1px solid var(--color-divider);padding:24px 28px;margin-bottom:20px">
+<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline"><div><span style="font-family:var(--font-heading);font-size:24px;font-variant-numeric:tabular-nums">#{{ o.id }}</span> <span class="tag tag-outline">{{ o.type }}</span></div><div style="font-family:var(--font-heading);font-size:24px;font-variant-numeric:tabular-nums">{{ o.total }}</div></div>
+<div style="color:var(--color-neutral-700);font-size:14px;margin:8px 0 22px;font-weight:300">{{ o.items }} · {{ o.date }}</div>
+<div class="rt-track" style="display:grid;grid-template-columns:repeat(4,1fr)"><sc-for list="{{ o.steps }}" as="t" hint-placeholder-count="4"><div style="{{ t.style }}">{{ t.label }}</div></sc-for></div></div></sc-for></div></main>
+
+<div class="rt-admin" style="display:{{ dAdmin }};min-height:calc(100vh - 80px);grid-template-columns:240px minmax(0,1fr)">
+<aside class="rt-aside" style="border-right:1px solid var(--color-divider);padding:36px 0;display:flex;flex-direction:column;gap:4px">
+<div class="rt-hide" style="padding:0 28px 20px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--color-accent-700)">Estate office</div>
+<sc-for list="{{ adminNav }}" as="n" hint-placeholder-count="4"><button onClick="{{ n.pick }}" style="{{ n.style }}">{{ n.label }}</button></sc-for>
+<div class="rt-hide" style="flex:1"></div><button onClick="{{ goHome }}" style="padding:14px 28px;text-align:left;background:none;border:0;border-top:1px solid var(--color-divider);color:var(--color-neutral-600);cursor:pointer;font-family:var(--font-body);font-size:13px;letter-spacing:.14em;text-transform:uppercase">View storefront →</button></aside>
+<section class="rt-asec" style="padding:48px 48px 100px;min-width:0">
+<h1 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:clamp(36px,4vw,56px);line-height:1;margin:0 0 36px">{{ adminTitle }}</h1>
+
+<div style="display:{{ aDash }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
+<sc-for list="{{ stats }}" as="s" hint-placeholder-count="4"><div style="padding:26px 24px 26px 0"><div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-neutral-600)">{{ s.label }}</div><div style="font-family:var(--font-heading);font-size:40px;margin-top:8px;font-variant-numeric:tabular-nums">{{ s.value }}</div><div style="font-size:12px;color:var(--color-neutral-600);margin-top:4px">{{ s.note }}</div></div></sc-for></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:48px;margin-top:48px">
+<div><div style="font-family:var(--font-heading);font-size:24px;margin-bottom:20px">Revenue · last 7 days</div>
+<div style="display:flex;align-items:flex-end;gap:14px;height:220px;border-bottom:1px solid var(--color-divider)">
+<sc-for list="{{ chart }}" as="c" hint-placeholder-count="7"><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px"><span style="font-size:11px;color:var(--color-neutral-600)">{{ c.val }}</span><div style="width:100%;height:{{ c.h }};border:1px solid #2f6b3a;background:rgba(214,185,120,.18)"></div></div></sc-for></div>
+<div style="display:flex;gap:14px;margin-top:8px"><sc-for list="{{ chart }}" as="c" hint-placeholder-count="7"><div style="flex:1;text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">{{ c.day }}</div></sc-for></div></div>
+<div><div style="font-family:var(--font-heading);font-size:24px;margin-bottom:20px">Best sellers · tins sold</div>
+<sc-for list="{{ top }}" as="t" hint-placeholder-count="5"><div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px"><span>{{ t.name }}</span><span style="font-variant-numeric:tabular-nums">{{ t.n }}</span></div><div style="height:6px;border:1px solid var(--color-divider)"><div style="height:100%;width:{{ t.w }};background:#2f6b3a"></div></div></div></sc-for></div></div>
+<div style="font-family:var(--font-heading);font-size:24px;margin:48px 0 8px">Recent orders</div>
+<table class="table" style="width:100%;text-align:left"><thead><tr><th>Order</th><th>Customer</th><th>Type</th><th>Total</th><th>Status</th></tr></thead><tbody>
+<sc-for list="{{ recent }}" as="o" hint-placeholder-count="5"><tr><td>#{{ o.id }}</td><td>{{ o.customer }}</td><td><span class="tag tag-outline">{{ o.type }}</span></td><td style="font-variant-numeric:tabular-nums">{{ o.total }}</td><td>{{ o.status }}</td></tr></sc-for></tbody></table>
+<div style="display:{{ lowDisplay }};margin-top:40px;border:1px solid #2f6b3a;padding:20px 24px"><span style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-accent-700)">Restock needed</span><div style="margin-top:8px;line-height:1.8">{{ lowText }}</div></div></div>
+
+<div style="display:{{ aOrders }}">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px"><sc-for list="{{ orderFilters }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button></sc-for></div>
+<table class="table" style="width:100%;text-align:left"><thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Type</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody>
+<sc-for list="{{ orderRows }}" as="o" hint-placeholder-count="5"><tr><td style="font-variant-numeric:tabular-nums">#{{ o.id }}</td><td>{{ o.date }}</td><td>{{ o.customer }}</td><td><span class="tag tag-outline">{{ o.type }}</span></td><td style="font-variant-numeric:tabular-nums">{{ o.total }}</td><td>{{ o.pay }}</td>
+<td><select onChange="{{ o.setStatus }}" class="input" style="padding:6px 10px"><option selected="{{ o.s0 }}">Processing</option><option selected="{{ o.s1 }}">Packed</option><option selected="{{ o.s2 }}">Shipped</option><option selected="{{ o.s3 }}">Delivered</option><option selected="{{ o.s4 }}">Cancelled</option></select></td>
+<td><button onClick="{{ o.view }}" class="btn btn-ghost">View</button></td></tr></sc-for></tbody></table></div>
+
+<div style="display:{{ aProducts }}">
+<div style="display:flex;justify-content:flex-end;margin-bottom:16px"><button onClick="{{ toggleAdd }}" class="btn btn-primary">{{ addLabel }}</button></div>
+<form onSubmit="{{ saveProduct }}" style="display:{{ addDisplay }};grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;border:1px solid var(--color-divider);padding:24px;margin-bottom:28px;align-items:end">
+<sc-for list="{{ addFields }}" as="a" hint-placeholder-count="5"><div class="field"><label>{{ a.label }}</label><input class="input" type="{{ a.type }}" required value="{{ a.val }}" onInput="{{ a.set }}"></div></sc-for>
+<button type="submit" class="btn btn-primary">Save tea</button></form>
+<table class="table" style="width:100%;text-align:left"><thead><tr><th></th><th>Tea</th><th>Category</th><th>Price / 250g (₹)</th><th>Stock (tins)</th><th>Listed</th><th></th></tr></thead><tbody>
+<sc-for list="{{ productRows }}" as="r" hint-placeholder-count="6"><tr><td><img src="{{ r.image }}" alt="" style="width:56px;height:42px;object-fit:cover;display:block"></td><td style="font-family:var(--font-heading);font-size:19px">{{ r.name }}</td><td>{{ r.cat }}</td>
+<td><input class="input" type="number" min="0" value="{{ r.price }}" onInput="{{ r.setPrice }}" style="width:110px;padding:6px 10px"></td>
+<td><input class="input" type="number" min="0" value="{{ r.stock }}" onInput="{{ r.setStock }}" style="width:90px;padding:6px 10px;color:{{ r.stockColor }}"></td>
+<td><button onClick="{{ r.toggle }}" class="btn btn-ghost">{{ r.listed }}</button></td><td><button onClick="{{ r.remove }}" class="btn btn-ghost">Delete</button></td></tr></sc-for></tbody></table></div>
+
+<div style="display:{{ aCust }}">
+<table class="table" style="width:100%;text-align:left"><thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Orders</th><th>Total spent</th></tr></thead><tbody>
+<sc-for list="{{ customerRows }}" as="c" hint-placeholder-count="4"><tr><td>{{ c.name }}</td><td>{{ c.email }}</td><td><span class="tag tag-outline">{{ c.kind }}</span></td><td style="font-variant-numeric:tabular-nums">{{ c.orders }}</td><td style="font-variant-numeric:tabular-nums">{{ c.spent }}</td></tr></sc-for></tbody></table></div>
+</section></div>
+
+<div style="position:fixed;inset:0;z-index:60;display:{{ drawerDisplay }}">
+<div onClick="{{ closeOrder }}" style="position:absolute;inset:0;background:rgba(6,18,12,.6)"></div>
+<aside style="position:absolute;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--color-bg);border-left:1px solid var(--color-divider);overflow:auto;padding:32px 32px 48px">
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:32px;margin:0">#{{ dId }}</h3><button onClick="{{ closeOrder }}" class="btn btn-ghost btn-icon">×</button></div>
+<p style="color:var(--color-neutral-600);margin:6px 0 24px">{{ dMeta }}</p>
+<div class="rt-track" style="display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:28px"><sc-for list="{{ dSteps }}" as="t" hint-placeholder-count="4"><div style="{{ t.style }}">{{ t.label }}</div></sc-for></div>
+<sc-for list="{{ dLines }}" as="l" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--color-divider);gap:12px"><span>{{ l.text }}</span><span style="font-variant-numeric:tabular-nums">{{ l.total }}</span></div></sc-for>
+<div style="display:flex;justify-content:space-between;font-family:var(--font-heading);font-size:26px;margin:18px 0 28px"><span>Total</span><span>{{ dTotal }}</span></div>
+<div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:6px">Ship to</div><p style="margin:0 0 28px;line-height:1.7;color:var(--color-neutral-700)">{{ dAddr }}</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ dStatuses }}" as="b" hint-placeholder-count="5"><button onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</button></sc-for></div></aside></div>
+
+<div style="position:fixed;inset:0;z-index:60;display:{{ cartDisplay }}">
+<div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(6,18,12,.6)"></div>
+<aside style="position:absolute;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--color-bg);border-left:1px solid var(--color-divider);display:flex;flex-direction:column">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:24px 28px;border-bottom:1px solid var(--color-divider)"><h3 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:32px;margin:0">Your bag</h3><button onClick="{{ closeCart }}" class="btn btn-ghost btn-icon">×</button></div>
+<div style="flex:1;overflow:auto;padding:8px 28px">
+<sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}"><p style="padding:48px 0;text-align:center;color:var(--color-neutral-600)">Your bag is empty.</p></sc-if>
+<sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="0">
+<div style="display:grid;grid-template-columns:64px 1fr auto;gap:16px;padding:20px 0;border-bottom:1px solid var(--color-divider);align-items:center">
+<img src="{{ l.image }}" alt="" style="width:64px;height:64px;object-fit:cover">
+<div><div style="font-family:var(--font-heading);font-size:20px;line-height:1.15">{{ l.name }}</div><div style="font-size:12px;color:var(--color-neutral-600);margin:4px 0 10px">{{ l.meta }}</div>
+<div style="display:flex;align-items:center;gap:10px"><button onClick="{{ l.dec }}" class="btn btn-ghost btn-icon">−</button><span style="min-width:24px;text-align:center">{{ l.qty }}</span><button onClick="{{ l.inc }}" class="btn btn-ghost btn-icon">+</button></div></div>
+<div style="text-align:right"><div style="font-family:var(--font-heading);font-size:20px;font-variant-numeric:tabular-nums">{{ l.total }}</div><button onClick="{{ l.remove }}" style="background:none;border:0;padding:6px 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600);cursor:pointer">Remove</button></div></div></sc-for></div>
+<div style="padding:24px 28px;border-top:1px solid var(--color-divider)">
+<div style="display:flex;justify-content:space-between;font-size:14px;color:var(--color-neutral-700);margin-bottom:6px"><span>Wholesale saving</span><span>−{{ cDisc }}</span></div>
+<div style="display:flex;justify-content:space-between;font-family:var(--font-heading);font-size:28px;margin-bottom:6px"><span>Subtotal</span><span style="font-variant-numeric:tabular-nums">{{ cNet }}</span></div>
+<div style="font-size:12px;color:var(--color-neutral-600);margin-bottom:18px">GST and shipping are calculated at checkout.</div>
+<button onClick="{{ toCheckout }}" class="btn btn-primary btn-block" style="padding:14px">Proceed to checkout</button></div></aside></div>
+
+<div style="position:fixed;inset:0;z-index:70;display:{{ prodDisplay }};align-items:center;justify-content:center;padding:24px">
+<div onClick="{{ closeProd }}" style="position:absolute;inset:0;background:rgba(6,18,12,.65)"></div>
+<div style="position:relative;background:var(--color-bg);border:1px solid var(--color-divider);max-width:900px;width:100%;max-height:92vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+<div style="padding:28px"><div class="plate"><img src="{{ mImage }}" alt="" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover"></div></div>
+<div style="padding:36px 36px 36px 8px;display:flex;flex-direction:column;gap:18px">
+<button onClick="{{ closeProd }}" class="btn btn-ghost btn-icon" style="align-self:flex-end">×</button>
+<div><div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--color-accent-700)">{{ mOrigin }}</div><h3 style="font-family:var(--font-heading);font-weight:700;letter-spacing:-.025em;font-size:38px;line-height:1.05;margin:8px 0 12px">{{ mName }}</h3><p style="font-size:14.5px;line-height:1.7;text-align:justify;margin:0;font-weight:300">{{ mDesc }}</p></div>
+<div style="display:flex;gap:8px"><sc-for list="{{ mSizes }}" as="z" hint-placeholder-count="3"><button onClick="{{ z.pick }}" style="{{ z.style }}">{{ z.label }}</button></sc-for></div>
+<div style="font-family:var(--font-heading);font-size:40px;font-variant-numeric:tabular-nums">{{ mPrice }}</div>
+<div style="display:flex;gap:12px;align-items:center"><div style="display:flex;align-items:center;border:1px solid var(--color-divider)"><button onClick="{{ mDec }}" style="width:40px;height:44px;background:none;border:0;cursor:pointer;font-size:18px;color:var(--color-text)">−</button><span style="min-width:30px;text-align:center">{{ mQty }}</span><button onClick="{{ mInc }}" style="width:40px;height:44px;background:none;border:0;cursor:pointer;font-size:18px;color:var(--color-text)">+</button></div><button onClick="{{ mAdd }}" class="btn btn-primary" style="flex:1;padding:12px">Add to bag</button></div>
+</div></div></div>
+
+<div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:100;background:var(--color-neutral-900);color:#f3efe2;padding:12px 24px;font-size:13px;letter-spacing:.06em;border:1px solid var(--color-accent-700);opacity:{{ toastOp }};pointer-events:none;transition:opacity .35s">{{ toast }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Gold&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;Gold&quot;,&quot;Champagne&quot;,&quot;Amber&quot;,&quot;Honey&quot;],&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  P0 = [
+    { id: 'matcha', tint: '#efe3c4', name: 'Ceremonial Matcha', cat: 'Green', price: 4499, origin: 'Uji, Kyoto', image: window.__resources.matcha, desc: 'Shade-grown first-flush tencha, stone-ground to a silken emerald powder with deep umami and a clean, sweet finish.' },
+    { id: 'sencha', tint: '#efe3c4', name: 'Jade Cloud Sencha', cat: 'Green', price: 3799, origin: 'Kagoshima', image: window.__resources.sencha, desc: 'Early-spring sencha milled whole: vivid in the bowl, rich in chlorophyll and L-theanine, bright and grassy on the palate.' },
+    { id: 'hojicha', tint: '#efe3c4', name: 'Hojicha', cat: 'Roasted', price: 2999, origin: 'Shizuoka', image: window.__resources.hojicha, desc: 'Slow-roasted Japanese tea ground to a cocoa-bronze powder. Toasted, nutty and gentle enough for the evening.' },
+    { id: 'assam', tint: '#efe3c4', name: 'Assam Black', cat: 'Black', price: 3299, origin: 'Assam Valley', image: window.__resources.black, desc: 'Whole-leaf black tea milled fine. Malt, honey and a velvety body that makes an exceptional latte.' },
+    { id: 'earl', tint: '#efe3c4', name: 'Earl Grey Micro-Ground', cat: 'Black', price: 3499, origin: 'Highland Ceylon', image: window.__resources.earlgrey, desc: 'Ceylon black tea ground with cold-pressed bergamot rind. Perfumed, bright and citrus-sweet.' },
+    { id: 'peony', tint: '#efe3c4', name: 'White Peony', cat: 'White', price: 5199, origin: 'Fuding, Fujian', image: window.__resources.white, desc: 'Rare white buds micro-milled cold to keep their melon and wild-orchid notes. Ultra-fine and delicate.' }
+  ];
+  SZ = [{ g: 100, m: 0.5 }, { g: 250, m: 1 }, { g: 500, m: 1.8 }];
+  STAT = ['Processing', 'Packed', 'Shipped', 'Delivered', 'Cancelled'];
+  money = n => '₹' + Math.round(n).toLocaleString('en-IN');
+  disc = q => q >= 50 ? 0.2 : q >= 25 ? 0.15 : q >= 10 ? 0.1 : 0;
+  prodIn = (prods, id) => prods.find(p => p.id === id) || this.P0.find(p => p.id === id);
+  unit = (l, prods) => this.prodIn(prods, l.id).price * this.SZ.find(z => z.g === l.size).m * (l.mode === 'bulk' ? 1 - this.disc(l.qty) : 1);
+  calc = (lines, prods) => {
+    const list = lines.reduce((a, l) => a + this.prodIn(prods, l.id).price * this.SZ.find(z => z.g === l.size).m * l.qty, 0);
+    const net = lines.reduce((a, l) => a + this.unit(l, prods) * l.qty, 0);
+    const ship = !lines.length || net >= 3000 || lines.some(l => l.mode === 'bulk') ? 0 : 150, gst = Math.round(net * 0.05);
+    return { list, net, disc: list - net, gst, ship, total: net + gst + ship };
+  };
+  mk = (id, customer, email, lines, status, day, pay, city) => ({ id, customer, email, lines, status, day, pay, addr: city, type: lines.some(l => l.mode === 'bulk') ? 'Bulk' : 'Single', total: this.calc(lines, this.P0).total });
+  state = (() => {
+    const L = (id, size, qty, mode) => ({ id, size, qty, mode: mode || 'single' });
+    return {
+      page: 'home', next: null, user: null, loginMode: 'login', lf: { name: '', email: '', pass: '' }, lerr: '',
+      accounts: [{ email: 'customer@theroots.com', pass: 'customer123', name: 'Demo Customer', role: 'customer', phone: '98765 43210', addr: '12 Lotus Lane, Indiranagar', city: 'Bengaluru', pin: '560038' }, { email: 'admin@theroots.com', pass: 'admin123', name: 'Hitoshi Tanaka', role: 'admin' }],
+      products: this.P0.map((p, i) => ({ ...p, stock: [120, 90, 14, 160, 75, 40][i], active: true })),
+      filter: 'All', cart: [], cartOpen: false, modal: null, mSize: 250, mQty: 1, bulk: {}, toast: '',
+      accTab: 'orders', pd: null, step: 1, f: { name: '', phone: '', email: '', addr: '', city: '', pin: '' }, pay: 'upi', pf: { upi: '', cn: '', ce: '', cv: '', cname: '' }, perr: '', paying: false, last: null,
+      adminTab: 'dashboard', ofilter: 'All', ao: null, addOpen: false, np: { name: '', cat: 'Green', price: '', stock: '', origin: '' },
+      orders: [
+        this.mk('ROOTS-98421', 'Demo Customer', 'customer@theroots.com', [L('matcha', 100, 1)], 'Processing', 0, 'UPI', 'Mumbai'),
+        this.mk('ROOTS-98418', 'Julian Thorne', 'julian@thorne.com', [L('hojicha', 250, 2)], 'Shipped', 1, 'Card', 'Bengaluru'),
+        this.mk('ROOTS-98410', 'Kettle & Leaf Café', 'orders@kettleleaf.com', [L('assam', 250, 30, 'bulk'), L('earl', 250, 25, 'bulk')], 'Packed', 2, 'Card', 'Pune'),
+        this.mk('ROOTS-98402', 'Meera Iyer', 'meera@iyer.in', [L('peony', 100, 2), L('sencha', 250, 1)], 'Delivered', 3, 'UPI', 'Chennai'),
+        this.mk('ROOTS-98395', 'Julian Thorne', 'julian@thorne.com', [L('matcha', 250, 2)], 'Delivered', 4, 'COD', 'Bengaluru'),
+        this.mk('ROOTS-98388', 'Zen Studio', 'buy@zenstudio.in', [L('matcha', 250, 12, 'bulk'), L('sencha', 250, 10, 'bulk')], 'Delivered', 5, 'Card', 'Delhi'),
+        this.mk('ROOTS-98377', 'Arjun Rao', 'arjun@rao.in', [L('earl', 500, 1)], 'Cancelled', 6, 'UPI', 'Hyderabad')
+      ]
+    };
+  })();
+  flash = msg => { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 2600); };
+  go = page => { this.setState({ page, cartOpen: false }); window.scrollTo(0, 0); };
+  addLine = (id, size, qty, mode) => this.setState(s => {
+    const cart = s.cart.map(l => ({ ...l })); const k = cart.find(l => l.id === id && l.size === size && l.mode === mode);
+    if (k) k.qty += qty; else cart.push({ id, size, qty, mode }); return { cart };
+  });
+  chg = (i, d) => this.setState(s => { const cart = s.cart.map(l => ({ ...l })); cart[i].qty += d; return { cart: cart.filter(l => l.qty > 0) }; });
+  setBulk = (id, q) => this.setState(s => ({ bulk: { ...s.bulk, [id]: Math.max(0, q | 0) } }));
+  fillAll = q => this.setState(s => ({ bulk: Object.fromEntries(s.products.filter(p => p.active).map(p => [p.id, q])) }));
+  navTo = id => { this.setState({ page: 'home', cartOpen: false }); setTimeout(() => { const e = document.getElementById(id); if (e) window.scrollTo(0, e.getBoundingClientRect().top + window.scrollY - 72); }, 60); };
+  setProd = (id, patch) => this.setState(s => ({ products: s.products.map(p => p.id === id ? { ...p, ...patch } : p) }));
+  setStatus = (id, status) => { this.setState(s => ({ orders: s.orders.map(o => o.id === id ? { ...o, status } : o) })); this.flash('#' + id + ' marked ' + status); };
+  placeOrder = () => {
+    const s = this.state, c = this.calc(s.cart, s.products), id = 'ROOTS-' + Math.floor(10000 + Math.random() * 90000);
+    const o = { id, customer: s.f.name, email: s.user.email, lines: s.cart, status: 'Processing', day: 0, pay: { upi: 'UPI', card: 'Card', cod: 'Cash on delivery' }[s.pay], addr: `${s.f.name}, ${s.f.addr}, ${s.f.city} ${s.f.pin} · ${s.f.phone}`, type: s.cart.some(l => l.mode === 'bulk') ? 'Bulk' : 'Single', total: c.total };
+    const products = s.products.map(p => { const used = s.cart.filter(l => l.id === p.id).reduce((a, l) => a + Math.ceil(l.qty * l.size / 250), 0); return used ? { ...p, stock: Math.max(0, p.stock - used) } : p; });
+    this.setState({ orders: [o, ...s.orders], products, cart: [], paying: false, last: o, step: 1, page: 'done' }); window.scrollTo(0, 0);
+  };
+  boot() {
+    this._tgt = 0; this._cur = 0; this._seek = false;
+    const g = i => document.getElementById(i);
+    const show = (el, on) => { if (!el) return; el.style.opacity = on ? 1 : 0; el.style.transform = on ? 'none' : 'translateY(24px)'; };
+    const loop = () => {
+      const v = g('rv'), c = g('rc'); if (!v || !c) return;
+      if (v !== this._v) {
+        this._v = v; this._seek = false;
+        v.addEventListener('seeked', () => { this._seek = false; });
+        v.addEventListener('loadeddata', () => { try { v.currentTime = 0.01; } catch (e) {} });
+        if (v.readyState >= 2) { try { v.currentTime = 0.01; } catch (e) {} }
+      }
+      const sec = g('story');
+      if (sec && v.duration) {
+        const r = sec.getBoundingClientRect(), tot = sec.offsetHeight - (window.innerHeight - 73);
+        if (tot > 0) {
+          const p = Math.max(0, Math.min(1, -r.top / tot)); this._tgt = p * v.duration;
+          if (g('rbar')) g('rbar').style.width = p * 100 + '%';
+          show(g('rch1'), p < 0.24); show(g('rch2'), p >= 0.28 && p < 0.62); show(g('rch3'), p >= 0.68);
+        }
+        this._cur += (this._tgt - this._cur) * 0.14;
+      }
+      const w = c.clientWidth, h = c.clientHeight; if (!w || !h || v.readyState < 2) return;
+      if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+      const va = (v.videoWidth || 16) / (v.videoHeight || 9), ca = w / h; let dw, dh;
+      if (ca > va) { dw = w; dh = w / va; } else { dh = h; dw = h * va; }
+      const x = c.getContext('2d'), F = this._frames;
+      if (F && v.duration) {
+        const pos = Math.max(0, Math.min(F.length - 1, (this._cur / v.duration) * (F.length - 1))), i = Math.floor(pos), fr = pos - i;
+        const put = (b, a) => { x.globalAlpha = a; x.drawImage(b, (w - dw) / 2, (h - dh) / 2, dw, dh); };
+        put(F[i], 1); if (fr > 0.01 && F[i + 1]) put(F[i + 1], fr); x.globalAlpha = 1;
+      } else if (!this._extracting) x.drawImage(v, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    };
+    const extract = async () => {
+      const v = g('rv'); if (!v || this._extracting || this._frames) return; this._extracting = true;
+      if (!v.duration) await new Promise(res => { v.addEventListener('loadedmetadata', res, { once: true }); if (v.readyState === 0) v.load(); });
+      const N = 120, out = [];
+      for (let i = 0; i < N; i++) {
+        await new Promise(res => { v.addEventListener('seeked', res, { once: true }); v.currentTime = Math.min(v.duration - 0.05, (i / (N - 1)) * v.duration); });
+        out.push(await createImageBitmap(v, { resizeWidth: 1280, resizeQuality: 'medium' }));
+      }
+      this._frames = out; this._extracting = false;
+    };
+    setTimeout(extract, 300);
+    this._iv = setInterval(loop, 33); window.addEventListener('scroll', loop, { passive: true }); this._loop = loop; loop();
+  }
+  componentWillUnmount() { clearInterval(this._iv); window.removeEventListener('scroll', this._loop); }
+  renderVals() {
+    const PAL = { Gold: '#d4ad5a', Champagne: '#e3cd96', Amber: '#c8943c', Honey: '#dcb869' }, pop = PAL[this.props.palette] || PAL.Gold;
+    const rootStyle = `--color-bg:#f4f0e4;--color-surface:#ebe6d6;--color-text:#14301f;--color-divider:rgba(20,48,31,.2);--color-neutral-600:#566b5c;--color-neutral-700:#2e473a;--color-neutral-900:#10281a;--pop:${pop};--color-accent-300:${pop};--color-accent-200:${pop};--color-accent:#14301f;--color-accent-700:#2f6b3a;--font-heading:'Bricolage Grotesque',sans-serif;--font-body:'DM Sans',sans-serif;font-family:var(--font-body);font-weight:400;color:var(--color-text);background:var(--color-bg);min-height:100vh`;
+    if (!this._started) { this._started = true; setTimeout(() => this.boot(), 0); }
+    const s = this.state, M = this.money, set = o => this.setState(o), pg = s.page, user = s.user, isAdmin = user && user.role === 'admin';
+    const pill = on => `padding:9px 18px;font-family:var(--font-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border:1px solid ${on ? '#14301f' : 'var(--color-divider)'};border-radius:999px;background:${on ? '#14301f' : 'transparent'};color:${on ? '#f4f0e4' : 'var(--color-text)'}`;
+    const tab = on => `padding:0 0 14px;background:none;border:0;border-bottom:1px solid ${on ? '#2f6b3a' : 'transparent'};margin-bottom:-1px;font-family:var(--font-body);font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;color:${on ? 'var(--color-accent-700)' : 'var(--color-neutral-600)'}`;
+    const prods = s.products, live = prods.filter(p => p.active);
+    const date = d => new Date(Date.now() - d * 864e5).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+    const items = o => o.lines.map(l => `${this.prodIn(prods, l.id).name} ${l.size}g × ${l.qty}`).join(', ');
+    const steps = st => { const i = st === 'Cancelled' ? -1 : ['Processing', 'Packed', 'Shipped', 'Delivered'].indexOf(st); return ['Placed', 'Packed', 'Shipped', 'Delivered'].map((label, k) => ({ label, style: `padding:10px 0;border-top:2px solid ${k <= i ? '#2f6b3a' : 'var(--color-divider)'};font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:${k <= i ? 'var(--color-accent-700)' : 'var(--color-neutral-600)'};text-align:left;padding-right:6px` })); };
+    const lineText = (l) => `${this.prodIn(prods, l.id).name} · ${l.size}g × ${l.qty}${l.mode === 'bulk' ? ' (wholesale)' : ''}`;
+    const cart = this.calc(s.cart, prods);
+    const m = s.modal ? this.prodIn(prods, s.modal) : null, ms = this.SZ.find(z => z.g === s.mSize);
+    const bulkTins = live.reduce((a, p) => a + (s.bulk[p.id] || 0), 0);
+    const bulkTotal = live.reduce((a, p) => { const q = s.bulk[p.id] || 0; return a + p.price * q * (1 - this.disc(q)); }, 0);
+    const bulkList = live.reduce((a, p) => a + p.price * (s.bulk[p.id] || 0), 0);
+    const live2 = s.orders.filter(o => o.status !== 'Cancelled');
+    const revenue = live2.reduce((a, o) => a + o.total, 0);
+    const low = prods.filter(p => p.stock < 20);
+    const dayRev = [6, 5, 4, 3, 2, 1, 0].map(d => ({ d, v: live2.filter(o => o.day === d).reduce((a, o) => a + o.total, 0) }));
+    const mx = Math.max(1, ...dayRev.map(x => x.v));
+    const tally = {}; live2.forEach(o => o.lines.forEach(l => { tally[l.id] = (tally[l.id] || 0) + Math.ceil(l.qty * l.size / 250); }));
+    const topList = Object.entries(tally).sort((a, b) => b[1] - a[1]).slice(0, 5), topMax = topList.length ? topList[0][1] : 1;
+    const custMap = {}; s.accounts.filter(a => a.role === 'customer').forEach(a => { custMap[a.email] = { name: a.name, email: a.email, orders: 0, spent: 0, bulk: false }; });
+    s.orders.forEach(o => { const c = custMap[o.email] || (custMap[o.email] = { name: o.customer, email: o.email, orders: 0, spent: 0, bulk: false }); c.orders++; if (o.status !== 'Cancelled') c.spent += o.total; if (o.type === 'Bulk') c.bulk = true; });
+    const detail = s.ao ? s.orders.find(o => o.id === s.ao) : null;
+    const inp = (obj, k) => e => set({ [obj]: { ...s[obj], [k]: e.target.value } });
+    const stepN = s.step;
+    const aT = s.adminTab;
+    const adminTabs = [['dashboard', 'Dashboard'], ['orders', 'Orders'], ['products', 'Products & stock'], ['customers', 'Customers']];
+    const showOrders = s.orders.filter(o => s.ofilter === 'All' || (s.ofilter === 'Bulk' ? o.type === 'Bulk' : o.status === s.ofilter));
+    const last = s.last;
+    return {
+      rootStyle,
+      dHome: pg === 'home' ? 'block' : 'none', dLogin: pg === 'login' ? 'block' : 'none', dCheckout: pg === 'checkout' ? 'block' : 'none', dDone: pg === 'done' ? 'block' : 'none', dAccount: pg === 'account' ? 'block' : 'none', dAdmin: pg === 'admin' ? 'grid' : 'none',
+      navDisplay: pg === 'home' ? 'flex' : 'none', bagDisplay: isAdmin ? 'none' : 'inline-block',
+      navBtn: 'background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text)',
+      navStory: () => this.navTo('story'), navOrigin: () => this.navTo('origin'), navCollection: () => this.navTo('collection'), navBulk: () => this.navTo('bulk'),
+      goHome: () => this.go(isAdmin ? 'admin' : 'home'),
+      loggedOut: !user, loggedIn: !!user, accountLabel: user ? (isAdmin ? 'Admin panel' : 'My account') : '',
+      goLogin: () => set({ page: 'login', lerr: '', next: null }), goAccount: () => this.go(isAdmin ? 'admin' : 'account'),
+      logout: () => { set({ user: null, page: 'home', cart: [] }); window.scrollTo(0, 0); this.flash('Signed out'); },
+      openCart: () => set({ cartOpen: true }), closeCart: () => set({ cartOpen: false }), cartCount: s.cart.reduce((a, l) => a + l.qty, 0),
+      filters: ['All', 'Green', 'Roasted', 'Black', 'White'].map(c => ({ label: c, pick: () => set({ filter: c }), style: pill(s.filter === c) })),
+      shown: live.filter(p => s.filter === 'All' || p.cat === s.filter).map(p => ({ ...p, tint: p.tint || '#efe3c4', priceFrom: 'from ' + M(p.price * 0.5), open: () => set({ modal: p.id, mSize: 250, mQty: 1 }),
+        quick: () => { this.addLine(p.id, 250, 1, 'single'); this.flash(p.name + ' added to your bag'); } })),
+      bulkRows: live.map(p => { const q = s.bulk[p.id] || 0, d = this.disc(q); return { name: p.name, image: p.image, unit: M(p.price), qty: q, tier: d ? `· −${d * 100}% applied` : '', line: q ? M(p.price * q * (1 - d)) : '—',
+        dec: () => this.setBulk(p.id, q - 1), inc: () => this.setBulk(p.id, q + 1), set: e => this.setBulk(p.id, +e.target.value) }; }),
+      fill10: () => this.fillAll(10), fill25: () => this.fillAll(25), fill50: () => this.fillAll(50),
+      bulkTins, bulkTotal: M(bulkTotal), bulkSaving: M(bulkList - bulkTotal),
+      addBulk: () => { if (!bulkTins) return this.flash('Set a quantity first'); live.forEach(p => { const q = s.bulk[p.id] || 0; if (q) this.addLine(p.id, 250, q, 'bulk'); }); set({ bulk: {}, cartOpen: true }); this.flash('Wholesale order added to your bag'); },
+      cartDisplay: s.cartOpen ? 'block' : 'none', cartEmpty: !s.cart.length,
+      cartLines: s.cart.map((l, i) => { const p = this.prodIn(prods, l.id), u = this.unit(l, prods); return { name: p.name, image: p.image, qty: l.qty, total: M(u * l.qty),
+        meta: `${l.size}g · ${M(u)} each` + (l.mode === 'bulk' ? ` · wholesale${this.disc(l.qty) ? ' −' + this.disc(l.qty) * 100 + '%' : ''}` : ''), dec: () => this.chg(i, -1), inc: () => this.chg(i, 1), remove: () => this.chg(i, -1e6) }; }),
+      cDisc: M(cart.disc), cNet: M(cart.net), cSub: M(cart.list), cGst: M(cart.gst), cShip: cart.ship ? M(cart.ship) : 'Free', cTotal: M(cart.total),
+      toCheckout: () => { if (!s.cart.length) return this.flash('Your bag is empty');
+        if (!user) { set({ cartOpen: false, page: 'login', next: 'checkout', lerr: '' }); window.scrollTo(0, 0); return this.flash('Please sign in to check out'); }
+        set({ cartOpen: false, page: 'checkout', step: 1, perr: '', f: { name: user.name, email: user.email, phone: user.phone || s.f.phone, addr: user.addr || s.f.addr, city: user.city || s.f.city, pin: user.pin || s.f.pin } }); window.scrollTo(0, 0); },
+      lfName: s.lf.name, lfEmail: s.lf.email, lfPass: s.lf.pass, setLfName: inp('lf', 'name'), setLfEmail: inp('lf', 'email'), setLfPass: inp('lf', 'pass'), lerr: s.lerr,
+      signupDisplay: s.loginMode === 'signup' ? 'block' : 'none', authLabel: s.loginMode === 'signup' ? 'Create account' : 'Sign in',
+      tabLogin: tab(s.loginMode === 'login'), tabSignup: tab(s.loginMode === 'signup'),
+      modeLogin: () => set({ loginMode: 'login', lerr: '' }), modeSignup: () => set({ loginMode: 'signup', lerr: '' }),
+      useCust: () => set({ lf: { ...s.lf, email: 'customer@theroots.com', pass: 'customer123' }, loginMode: 'login' }), useAdmin: () => set({ lf: { ...s.lf, email: 'admin@theroots.com', pass: 'admin123' }, loginMode: 'login' }),
+      doAuth: e => { e.preventDefault(); const em = s.lf.email.trim().toLowerCase();
+        let acc;
+        if (s.loginMode === 'signup') {
+          if (s.accounts.some(a => a.email === em)) return set({ lerr: 'An account with this email already exists.' });
+          if (!s.lf.name.trim()) return set({ lerr: 'Please enter your name.' });
+          acc = { email: em, pass: s.lf.pass, name: s.lf.name.trim(), role: 'customer' }; set({ accounts: [...s.accounts, acc] });
+        } else { acc = s.accounts.find(a => a.email === em && a.pass === s.lf.pass); if (!acc) return set({ lerr: 'Email or password is incorrect.' }); }
+        const nxt = s.next === 'checkout' && acc.role === 'customer' && s.cart.length ? 'checkout' : acc.role === 'admin' ? 'admin' : 'home';
+        set({ user: acc, page: nxt, lf: { name: '', email: '', pass: '' }, lerr: '', next: null, step: 1, accTab: 'orders', pd: null, f: { name: acc.name, email: acc.email, phone: acc.phone || '', addr: acc.addr || '', city: acc.city || '', pin: acc.pin || '' } }); window.scrollTo(0, 0); this.flash('Welcome, ' + acc.name.split(' ')[0]); },
+      stepTitle: stepN === 1 ? 'Delivery details' : 'Payment',
+      stepper: ['Bag', 'Delivery', 'Payment'].map((label, i) => ({ n: i + 1, label, style: `flex:1;padding:14px 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--color-divider);color:${(i === 0 || i + 1 <= stepN) ? 'var(--color-accent-700)' : 'var(--color-neutral-600)'}` })),
+      step1Display: stepN === 1 ? 'grid' : 'none', step2Display: stepN === 2 ? 'flex' : 'none',
+      detailFields: [['name', 'Full name', 'text', '1 / -1'], ['phone', 'Phone', 'tel', 'auto'], ['email', 'Email', 'email', 'auto'], ['addr', 'Address', 'text', '1 / -1'], ['city', 'City', 'text', 'auto'], ['pin', 'PIN code', 'text', 'auto']].map(([k, label, type, span]) => ({ label, type, span, val: s.f[k], set: inp('f', k) })),
+      submitDetails: e => { e.preventDefault(); set({ step: 2, perr: '' }); window.scrollTo(0, 0); },
+      payMethods: [['upi', 'UPI'], ['card', 'Card'], ['cod', 'Cash on delivery']].map(([k, label]) => ({ label, pick: () => set({ pay: k, perr: '' }), style: pill(s.pay === k) + ';padding:14px 6px' })),
+      upiDisplay: s.pay === 'upi' ? 'block' : 'none', cardDisplay: s.pay === 'card' ? 'grid' : 'none', codDisplay: s.pay === 'cod' ? 'block' : 'none',
+      pfUpi: s.pf.upi, setUpi: inp('pf', 'upi'),
+      cardFields: [['cn', 'Card number', '1234 5678 9012 3456', '1 / -1'], ['cname', 'Name on card', 'As printed', '1 / -1'], ['ce', 'Expiry', 'MM / YY', 'auto'], ['cv', 'CVV', '•••', 'auto']].map(([k, label, ph, span]) => ({ label, ph, span, val: s.pf[k], set: inp('pf', k) })),
+      backStep: () => set({ step: 1, perr: '' }),
+      payLabel: s.paying ? 'Processing payment…' : (s.pay === 'cod' ? 'Place order · ' : 'Pay ') + M(cart.total), perr: s.perr,
+      submitPay: e => { e.preventDefault(); if (s.paying) return;
+        if (s.pay === 'upi' && !/^[\w.\-]+@[\w]+$/.test(s.pf.upi.trim())) return set({ perr: 'Enter a valid UPI ID, e.g. name@okbank.' });
+        if (s.pay === 'card' && (s.pf.cn.replace(/\s/g, '').length < 15 || !s.pf.ce.trim() || s.pf.cv.length < 3 || !s.pf.cname.trim())) return set({ perr: 'Please complete your card details.' });
+        set({ paying: true, perr: '' }); setTimeout(() => this.placeOrder(), 1600); },
+      sumLines: s.cart.map(l => { const p = this.prodIn(prods, l.id), u = this.unit(l, prods); return { name: p.name, image: p.image, meta: `${l.size}g × ${l.qty}`, total: M(u * l.qty) }; }),
+      lastName: last ? last.customer.split(' ')[0] : '', lastId: last ? last.id : '', lastTotal: last ? M(last.total) : '', lastPay: last ? last.pay : '',
+      lastNote: last ? `A confirmation was sent to ${last.email}. ${last.type === 'Bulk' ? 'Wholesale orders dispatch within 3 working days.' : 'Dispatch within 24 hours.'}` : '',
+      lastSteps: last ? steps(last.status) : [], lastLines: last ? last.lines.map(l => ({ text: lineText(l), total: M(this.unit(l, prods) * l.qty) })) : [],
+      accTabOrders: () => set({ accTab: 'orders' }), accTabProfile: () => set({ accTab: 'profile', pd: null }), accTabO: tab(s.accTab === 'orders'), accTabP: tab(s.accTab === 'profile'),
+      profDisplay: s.accTab === 'profile' ? 'grid' : 'none', ordDisplay: s.accTab === 'orders' ? 'block' : 'none',
+      profFields: user ? [['name', 'Full name', 'text', 'auto', ''], ['phone', 'Phone', 'tel', 'auto', ''], ['addr', 'Address', 'text', '1 / -1', ''], ['city', 'City', 'text', 'auto', ''], ['pin', 'PIN code', 'text', 'auto', ''], ['pass', 'New password', 'password', '1 / -1', 'Leave blank to keep current']].map(([k, label, type, span, ph]) => ({ label, type, span, ph, val: s.pd ? (s.pd[k] ?? '') : (k === 'pass' ? '' : (user[k] || '')), set: e => set({ pd: { ...(s.pd || { name: user.name, phone: user.phone || '', addr: user.addr || '', city: user.city || '', pin: user.pin || '', pass: '' }), [k]: e.target.value } }) })) : [],
+      saveProfile: e => { e.preventDefault(); const d = s.pd || {}; const up = { ...user, ...(d.name ? { name: d.name } : {}), ...(d.phone !== undefined ? { phone: d.phone, addr: d.addr, city: d.city, pin: d.pin } : {}), ...(d.pass ? { pass: d.pass } : {}) };
+        set({ user: up, accounts: s.accounts.map(a => a.email === user.email ? up : a), pd: null, f: { ...s.f, name: up.name, phone: up.phone || '', addr: up.addr || '', city: up.city || '', pin: up.pin || '' } }); this.flash('Profile updated'); },
+      accName: user ? user.name : '', accEmail: user ? user.email : '',
+      myOrders: user ? s.orders.filter(o => o.email === user.email).map(o => ({ id: o.id, type: o.type, total: M(o.total), items: items(o), date: date(o.day), steps: steps(o.status) })) : [],
+      noOrdersDisplay: user && !s.orders.some(o => o.email === user.email) ? 'block' : 'none',
+      adminNav: adminTabs.map(([k, label]) => ({ label, pick: () => set({ adminTab: k }), style: `padding:14px 28px;text-align:left;background:${aT === k ? 'var(--pop)' : 'none'};border:0;border-left:3px solid ${aT === k ? '#14301f' : 'transparent'};font-family:var(--font-body);font-size:13px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;color:#14301f;font-weight:${aT === k ? 700 : 400}` })),
+      adminTitle: adminTabs.find(t => t[0] === aT)[1], aDash: aT === 'dashboard' ? 'block' : 'none', aOrders: aT === 'orders' ? 'block' : 'none', aProducts: aT === 'products' ? 'block' : 'none', aCust: aT === 'customers' ? 'block' : 'none',
+      stats: [{ label: 'Revenue', value: M(revenue), note: 'excl. cancelled' }, { label: 'Orders', value: s.orders.length, note: s.orders.filter(o => o.status === 'Processing').length + ' to pack' }, { label: 'Avg. order', value: M(live2.length ? revenue / live2.length : 0), note: s.orders.filter(o => o.type === 'Bulk').length + ' wholesale' }, { label: 'Low stock', value: low.length, note: 'under 20 tins' }],
+      chart: dayRev.map(x => ({ day: new Date(Date.now() - x.d * 864e5).toLocaleDateString('en-IN', { weekday: 'short' }), val: x.v ? '₹' + (x.v / 1000).toFixed(1) + 'k' : '', h: Math.max(2, Math.round(x.v / mx * 85)) + '%' })),
+      top: topList.map(([id, n]) => ({ name: this.prodIn(prods, id).name, n, w: Math.round(n / topMax * 100) + '%' })),
+      recent: s.orders.slice(0, 5).map(o => ({ id: o.id, customer: o.customer, type: o.type, total: M(o.total), status: o.status })),
+      lowDisplay: low.length ? 'block' : 'none', lowText: low.map(p => `${p.name} — ${p.stock} tins left`).join(' · '),
+      orderFilters: ['All', ...this.STAT, 'Bulk'].map(f => ({ label: f, pick: () => set({ ofilter: f }), style: pill(s.ofilter === f) })),
+      orderRows: showOrders.map(o => ({ id: o.id, date: date(o.day), customer: o.customer, type: o.type, total: M(o.total), pay: o.pay, s0: o.status === 'Processing', s1: o.status === 'Packed', s2: o.status === 'Shipped', s3: o.status === 'Delivered', s4: o.status === 'Cancelled',
+        setStatus: e => this.setStatus(o.id, e.target.value), view: () => set({ ao: o.id }) })),
+      drawerDisplay: detail ? 'block' : 'none', closeOrder: () => set({ ao: null }),
+      dId: detail ? detail.id : '', dMeta: detail ? `${detail.customer} · ${detail.email} · ${date(detail.day)} · ${detail.type}` : '', dSteps: detail ? steps(detail.status) : [],
+      dLines: detail ? detail.lines.map(l => ({ text: lineText(l), total: M(this.unit(l, prods) * l.qty) })) : [], dTotal: detail ? M(detail.total) : '', dAddr: detail ? detail.addr + ' · Paid via ' + detail.pay : '',
+      dStatuses: detail ? this.STAT.map(st => ({ label: st, pick: () => this.setStatus(detail.id, st), style: pill(detail.status === st) })) : [],
+      addLabel: s.addOpen ? 'Close' : 'Add new tea', addDisplay: s.addOpen ? 'grid' : 'none', toggleAdd: () => set({ addOpen: !s.addOpen }),
+      addFields: [['name', 'Name', 'text'], ['cat', 'Category', 'text'], ['price', 'Price / 250g (₹)', 'number'], ['stock', 'Stock (tins)', 'number'], ['origin', 'Origin', 'text']].map(([k, label, type]) => ({ label, type, val: s.np[k], set: inp('np', k) })),
+      saveProduct: e => { e.preventDefault(); const n = s.np;
+        set({ products: [...prods, { id: 'p' + Date.now(), name: n.name, cat: n.cat, price: +n.price, origin: n.origin, image: window.__resources.matcha, desc: 'A new small-batch powder from the estate.', stock: +n.stock, active: true }], np: { name: '', cat: 'Green', price: '', stock: '', origin: '' }, addOpen: false }); this.flash(n.name + ' added to the catalogue'); },
+      productRows: prods.map(p => ({ image: p.image, name: p.name, cat: p.cat, price: p.price, stock: p.stock, stockColor: p.stock < 20 ? '#b3361f' : 'inherit', listed: p.active ? 'Listed' : 'Hidden',
+        setPrice: e => this.setProd(p.id, { price: Math.max(0, +e.target.value) }), setStock: e => this.setProd(p.id, { stock: Math.max(0, +e.target.value | 0) }), toggle: () => this.setProd(p.id, { active: !p.active }),
+        remove: () => { set({ products: prods.filter(x => x.id !== p.id) }); this.flash(p.name + ' removed'); } })),
+      customerRows: Object.values(custMap).map(c => ({ name: c.name, email: c.email, kind: c.bulk ? 'Wholesale' : 'Retail', orders: c.orders, spent: M(c.spent) })),
+      prodDisplay: m ? 'flex' : 'none', closeProd: () => set({ modal: null }), mImage: m ? m.image : '', mName: m ? m.name : '', mOrigin: m ? m.origin : '', mDesc: m ? m.desc : '',
+      mSizes: this.SZ.map(z => ({ label: z.g + 'g', pick: () => set({ mSize: z.g }), style: pill(s.mSize === z.g) + ';flex:1' })),
+      mPrice: m ? M(m.price * ms.m * s.mQty) : '', mQty: s.mQty, mDec: () => set({ mQty: Math.max(1, s.mQty - 1) }), mInc: () => set({ mQty: s.mQty + 1 }),
+      mAdd: () => { this.addLine(m.id, s.mSize, s.mQty, 'single'); set({ modal: null }); this.flash(`${m.name} ${s.mSize}g added to your bag`); },
+      toast: s.toast, toastOp: s.toast ? 1 : 0
+    };
+  }
+}
+</script>
+</body>
+</html>

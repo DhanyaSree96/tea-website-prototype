@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Roots — Artisanal Tea Powder & Rituals</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#071510',
+                            deep: '#0c2017',
+                            emerald: '#132e22',
+                            sage: '#2c4a3b',
+                            gold: '#d4af37',
+                            lightgold: '#e6ca65',
+                            parchment: '#f7f4ed',
+                            cream: '#eae3d2',
+                            accent: '#8b261d'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Cormorant Garamond', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #071510;
+            color: #f7f4ed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Gold Gradient Text */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff2cb 0%, #d4af37 50%, #aa820a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Video Scroll Sticky Container */
+        .video-scroll-section {
+            height: 400vh;
+            position: relative;
+        }
+
+        .video-sticky-wrapper {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #071510;
+        }
+
+        #scrollCanvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.88) contrast(1.05);
+            display: block;
+        }
+
+        /* Story Overlay Floating Cards */
+        .story-overlay-card {
+            position: absolute;
+            z-index: 20;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            pointer-events: none;
+        }
+
+        .story-overlay-card.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(12, 32, 23, 0.68);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #071510;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3d2f;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+
+        .modal-backdrop {
+            background: rgba(4, 12, 9, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        #toast {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-brand-gold selection:text-brand-dark">
+
+    <!-- Ambient Floating Particle Canvas -->
+    <canvas id="ambientCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-25"></canvas>
+
+    <!-- Global Toast Notification Banner -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none glass-card border border-brand-gold/50 px-6 py-3.5 rounded-xl shadow-2xl flex items-center space-x-3 text-sm text-brand-cream">
+        <div class="w-8 h-8 rounded-full bg-brand-gold/20 border border-brand-gold flex items-center justify-center text-brand-gold">
+            <i id="toastIcon" class="fa-solid fa-check"></i>
+        </div>
+        <span id="toastMsg" class="font-medium">Notification message</span>
+    </div>
+
+    <!-- Top Announcement & Role Toggle Bar -->
+    <div id="topBanner" class="bg-gradient-to-r from-brand-deep via-brand-emerald to-brand-deep border-b border-brand-gold/20 py-2.5 px-4 text-xs font-medium tracking-wider text-brand-cream/90 flex justify-between items-center z-50 relative">
+        <div class="hidden md:flex items-center space-x-3 text-brand-gold">
+            <span><i class="fa-solid fa-leaf text-xs"></i> 100% Organic Hand-Harvested Matcha & Tea Powder</span>
+            <span>•</span>
+            <button onclick="showToast('🎉 Free sample pack added to your order!', 'gift')" class="underline hover:text-white transition cursor-pointer">Complimentary Tasting Sample</button>
+        </div>
+        <div class="mx-auto md:mx-0 flex items-center space-x-4">
+            <span id="roleIndicator" class="px-3 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/30">
+                Mode: Customer
+            </span>
+            <button onclick="toggleRoleSwitch()" class="text-brand-gold hover:text-white transition flex items-center space-x-1.5 underline text-[11px] font-semibold cursor-pointer">
+                <i class="fa-solid fa-arrows-rotate text-[10px]"></i>
+                <span id="roleToggleText">Switch to Admin Portal</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-brand-dark/90 backdrop-blur-md border-b border-brand-gold/15 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo: The Roots -->
+            <a href="#heroVideoSection" onclick="closeCartDrawer()" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-full border border-brand-gold/50 flex items-center justify-center bg-brand-deep/80 group-hover:border-brand-gold transition-all duration-300">
+                    <svg class="w-6 h-6 text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" opacity="0.2" fill="currentColor"/>
+                        <path d="M12 4c-3.5 0-6.5 2.5-7 6 2.5-1 5.5-.5 7.5 1.5 2-2 5-2.5 7.5-1.5-.5-3.5-3.5-6-7-6z" stroke-linecap="round"/>
+                        <path d="M12 11.5v8.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif-title text-2xl tracking-[0.25em] text-white group-hover:text-brand-gold transition duration-300 font-bold">THE ROOTS</span>
+                    <span class="text-[9px] tracking-[0.3em] uppercase text-brand-gold/70">Artisanal Tea Powder</span>
+                </div>
+            </a>
+
+            <!-- Customer Nav Links (Explicitly closes side drawer on click) -->
+            <nav id="customerNavLinks" class="hidden md:flex items-center space-x-8 text-sm tracking-widest font-medium uppercase text-brand-cream/80">
+                <a href="#heroVideoSection" onclick="closeCartDrawer()" class="hover:text-brand-gold transition-colors duration-200">Scroll Story</a>
+                <a href="#origin" onclick="closeCartDrawer()" class="hover:text-brand-gold transition-colors duration-200">Origin</a>
+                <a href="#collection" onclick="closeCartDrawer()" class="hover:text-brand-gold transition-colors duration-200">Collection</a>
+                <a href="#ritual" onclick="closeCartDrawer()" class="hover:text-brand-gold transition-colors duration-200">Tea Ritual</a>
+            </nav>
+
+            <!-- Admin Nav Links -->
+            <nav id="adminNavLinks" class="hidden flex items-center space-x-6 text-sm tracking-widest font-medium uppercase text-brand-gold">
+                <button onclick="showAdminTab('orders')" class="hover:text-white transition cursor-pointer">Orders</button>
+                <button onclick="showAdminTab('products')" class="hover:text-white transition cursor-pointer">Inventory</button>
+                <button onclick="showAdminTab('customers')" class="hover:text-white transition cursor-pointer">Customers</button>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-5">
+                <button onclick="toggleSearchModal()" class="text-brand-cream/80 hover:text-brand-gold transition p-2 cursor-pointer" title="Search Teas">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                
+                <button onclick="openAuthModal()" class="text-brand-cream/80 hover:text-brand-gold transition p-2 flex items-center space-x-2 cursor-pointer" title="Account">
+                    <i class="fa-regular fa-user text-lg"></i>
+                    <span id="userAccountName" class="hidden lg:inline text-xs font-semibold tracking-wider text-brand-cream">Sign In</span>
+                </button>
+
+                <button onclick="openCartDrawer()" class="relative p-2 text-brand-cream/80 hover:text-brand-gold transition group cursor-pointer" title="Shopping Cart">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 w-5 h-5 bg-brand-gold text-brand-dark font-bold text-[11px] rounded-full flex items-center justify-center border-2 border-brand-dark group-hover:scale-110 transition-transform">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- STOREFRONT CUSTOMER VIEW -->
+    <main id="customerView" class="relative z-10">
+
+        <!-- VIDEO SCROLL ANIMATION SECTION -->
+        <section id="heroVideoSection" class="video-scroll-section">
+            <div class="video-sticky-wrapper">
+                
+                <video id="scrollVideo" muted playsinline preload="auto" class="hidden">
+                    <source src="reference/video.mp4" type="video/mp4">
+                </video>
+
+                <canvas id="scrollCanvas"></canvas>
+
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-brand-dark/50 pointer-events-none"></div>
+
+                <!-- Scroll Progress Indicator -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center space-y-2 pointer-events-none">
+                    <span class="text-[10px] uppercase tracking-[0.3em] text-brand-gold/90 font-semibold">Scroll to Unfold Story</span>
+                    <div class="w-36 h-1 bg-brand-dark/80 rounded-full overflow-hidden border border-brand-gold/40">
+                        <div id="videoProgressBar" class="h-full bg-gradient-to-r from-brand-gold to-brand-lightgold w-0 transition-all duration-100"></div>
+                    </div>
+                </div>
+
+                <!-- OVERLAY STORY CARD 1 -->
+                <div id="storyCard1" class="story-overlay-card active max-w-xl px-6 text-center space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/40 text-brand-gold text-xs tracking-widest uppercase font-semibold">
+                        <i class="fa-solid fa-crown text-[10px]"></i>
+                        <span>The Roots Harvest 2026</span>
+                    </div>
+
+                    <h1 class="font-serif-title text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.15]">
+                        A RITUAL <br>
+                        <span class="gold-gradient-text italic font-normal">WORTH SAVORING.</span>
+                    </h1>
+
+                    <p class="text-brand-cream/90 text-sm sm:text-base font-light leading-relaxed">
+                        Pure stone-ground tea powder from high-altitude Japanese micro-climates. Crafted for moments of deep peace.
+                    </p>
+
+                    <div class="pt-2 flex justify-center gap-4">
+                        <a href="#collection" onclick="closeCartDrawer()" class="px-7 py-3 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition shadow-lg shadow-brand-gold/20 flex items-center space-x-2 cursor-pointer">
+                            <span>Shop The Collection</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- OVERLAY STORY CARD 2 -->
+                <div id="storyCard2" class="story-overlay-card max-w-lg px-6 glass-card p-8 rounded-2xl text-left space-y-4 border border-brand-gold/40 shadow-2xl">
+                    <span class="text-brand-gold text-xs uppercase tracking-[0.3em] font-semibold">Chapter I</span>
+                    <h2 class="font-serif-title text-3xl font-bold text-white">CRAFT & STORY</h2>
+                    <div class="w-12 h-0.5 bg-brand-gold"></div>
+                    <p class="text-brand-cream/80 text-xs sm:text-sm leading-relaxed">
+                        Each tin opens to reveal hand-harvested leaves, shade-grown for 30 days and micro-milled on granite millstones into ultra-fine ceremonial tea powder.
+                    </p>
+                    <div class="pt-2 flex items-center space-x-4 text-xs text-brand-gold font-semibold">
+                        <button onclick="showToast('Whole leaf shade-grown Tencha certified', 'leaf')" class="hover:underline flex items-center space-x-1 cursor-pointer">
+                            <i class="fa-solid fa-leaf"></i> <span>Pure Stone-Ground</span>
+                        </button>
+                        <span>•</span>
+                        <button onclick="showToast('UV lightproof nitrogen flushed container', 'shield')" class="hover:underline flex items-center space-x-1 cursor-pointer">
+                            <i class="fa-solid fa-gem"></i> <span>UV Lightproof Tin</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- OVERLAY STORY CARD 3 -->
+                <div id="storyCard3" class="story-overlay-card max-w-md px-6 text-center space-y-4">
+                    <span class="text-brand-gold text-xs uppercase tracking-[0.3em] font-semibold">Chapter II</span>
+                    <h2 class="font-serif-title text-4xl font-bold text-white">THE ROOTS TERROIR</h2>
+                    <p class="text-brand-cream/80 text-xs sm:text-sm leading-relaxed">
+                        Grown at 2,100 meters elevation in organic soil nourished by volcanic minerals and mountain spring streams.
+                    </p>
+                    <a href="#collection" onclick="closeCartDrawer()" class="inline-block mt-4 px-6 py-2.5 border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark font-bold text-xs uppercase tracking-widest rounded transition cursor-pointer">
+                        Explore Tea Blends
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: ORIGIN & TERROIR -->
+        <section id="origin" class="py-24 px-4 sm:px-6 lg:px-8 bg-brand-dark relative z-20">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-2xl overflow-hidden border border-brand-gold/25 shadow-2xl">
+                
+                <div class="lg:col-span-6 bg-brand-deep p-8 sm:p-14 flex flex-col justify-between space-y-8 border-b lg:border-b-0 lg:border-r border-brand-gold/20">
+                    <div class="space-y-4">
+                        <span class="text-brand-gold text-xs uppercase tracking-[0.3em] font-semibold">Tea Experience</span>
+                        <h2 class="font-serif-title text-4xl sm:text-6xl font-bold text-white tracking-wider">ORIGIN</h2>
+                        <p class="text-brand-cream/80 text-base leading-relaxed font-light">
+                            The Roots source directly from organic heritage tea gardens in Uji and Shizuoka. Crisp mountain air and natural temperature swings yield rich umami and sweet floral undertones.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-6 border-t border-brand-gold/20">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-brand-cream/60">Harvest Elevation</span>
+                            <span class="text-brand-gold font-serif-title font-bold">1,800 - 2,400 meters</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-brand-cream/60">Milling Technique</span>
+                            <span class="text-brand-gold font-serif-title font-bold">Slow Granite Mill (30g/hr)</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-brand-cream/60">Flavor Profile</span>
+                            <span class="text-brand-gold font-serif-title font-bold">Rich Umami, Chestnut, Cream</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <a href="#collection" onclick="closeCartDrawer()" class="inline-flex items-center space-x-3 px-8 py-3.5 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition cursor-pointer">
+                            <span>Discover Origins</span>
+                            <i class="fa-solid fa-compass"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 bg-brand-parchment p-8 sm:p-14 flex flex-col justify-between relative overflow-hidden min-h-[400px]">
+                    <div class="absolute inset-0 pointer-events-none opacity-90">
+                        <svg class="w-full h-full" viewBox="0 0 400 400" fill="none">
+                            <g opacity="0.8">
+                                <path d="M120 80 C 160 50, 200 90, 180 140 C 140 170, 100 130, 120 80 Z" fill="#2c4a3b"/>
+                                <path d="M120 80 L 180 140" stroke="#132e22" stroke-width="1.5"/>
+                            </g>
+                            <g opacity="0.7">
+                                <path d="M260 180 C 300 150, 340 190, 320 240 C 280 270, 240 230, 260 180 Z" fill="#132e22"/>
+                                <path d="M260 180 L 320 240" stroke="#071510" stroke-width="1.5"/>
+                            </g>
+                            <g opacity="0.85">
+                                <path d="M80 260 C 120 230, 160 270, 140 320 C 100 350, 60 310, 80 260 Z" fill="#3b5e4c"/>
+                                <path d="M80 260 L 140 320" stroke="#132e22" stroke-width="1.5"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 text-brand-dark space-y-4">
+                        <span class="text-xs uppercase tracking-widest text-brand-sage font-bold">100% Organic Soil Cultivation</span>
+                        <h3 class="font-serif-title text-3xl font-bold text-brand-dark">Zero Additives. Pure Tea Essence.</h3>
+                        <p class="text-brand-dark/75 text-sm leading-relaxed">
+                            The Roots tea powder contains zero added sugars, preservatives, or artificial colors — just pure 100% stone-ground tea leaves packed with L-theanine and antioxidants.
+                        </p>
+                    </div>
+
+                    <div class="relative z-10 pt-8 flex items-center justify-between border-t border-brand-dark/10 text-brand-dark">
+                        <button onclick="showToast('Certified 100% pesticide-free organic tea estate', 'check')" class="text-left group cursor-pointer">
+                            <span class="block text-2xl font-serif-title font-bold group-hover:text-brand-emerald transition">100%</span>
+                            <span class="text-[11px] uppercase tracking-wider text-brand-dark/60">Pesticide Free</span>
+                        </button>
+                        <button onclick="showToast('Ethical direct trade supporting Japanese heritage farmers', 'handshake')" class="text-right group cursor-pointer">
+                            <span class="block text-2xl font-serif-title font-bold group-hover:text-brand-emerald transition">Direct</span>
+                            <span class="text-[11px] uppercase tracking-wider text-brand-dark/60">Fair Trade Farms</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PRODUCT COLLECTION SHOWCASE -->
+        <section id="collection" class="py-24 px-4 sm:px-6 lg:px-8 bg-brand-deep/40 relative z-20">
+            <div class="max-w-7xl mx-auto space-y-12">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="space-y-3">
+                        <span class="text-brand-gold text-xs uppercase tracking-[0.3em] font-semibold">Artisanal Reserve</span>
+                        <h2 class="font-serif-title text-3xl sm:text-5xl font-bold text-white">THE ROOTS COLLECTION</h2>
+                        <p class="text-brand-cream/70 text-sm max-w-lg">
+                            Hand-milled tea powders sealed in lightproof UV-protected dark tins.
+                        </p>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="flex flex-wrap gap-2 text-xs uppercase tracking-wider">
+                        <button onclick="filterProducts('all', event)" class="cat-btn active px-4 py-2 rounded bg-brand-gold text-brand-dark font-bold transition cursor-pointer">All Teas</button>
+                        <button onclick="filterProducts('matcha', event)" class="cat-btn px-4 py-2 rounded bg-brand-emerald/60 text-brand-cream hover:bg-brand-gold/20 hover:text-brand-gold border border-brand-gold/20 transition cursor-pointer">Matcha</button>
+                        <button onclick="filterProducts('green', event)" class="cat-btn px-4 py-2 rounded bg-brand-emerald/60 text-brand-cream hover:bg-brand-gold/20 hover:text-brand-gold border border-brand-gold/20 transition cursor-pointer">Green Powder</button>
+                        <button onclick="filterProducts('black', event)" class="cat-btn px-4 py-2 rounded bg-brand-emerald/60 text-brand-cream hover:bg-brand-gold/20 hover:text-brand-gold border border-brand-gold/20 transition cursor-pointer">Black Powder</button>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Products populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: INTERACTIVE TEA RITUAL & BREWING CALCULATOR -->
+        <section id="ritual" class="py-24 px-4 sm:px-6 lg:px-8 bg-brand-dark border-t border-brand-gold/15 relative z-20">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-brand-gold text-xs uppercase tracking-[0.3em] font-semibold">Mindful Whisking Ceremony</span>
+                    <h2 class="font-serif-title text-3xl sm:text-5xl font-bold text-white">THE PERFECT WHISK RITUAL</h2>
+                    <p class="text-brand-cream/70 text-sm leading-relaxed">
+                        Whisking fine tea powder with a bamboo chasen requires optimal water temperature and ratio. Use our interactive whisking guide below.
+                    </p>
+
+                    <div class="p-6 rounded-xl glass-card space-y-4 border border-brand-gold/30">
+                        <div class="flex items-center space-x-3 text-brand-gold">
+                            <i class="fa-solid fa-temperature-half text-xl"></i>
+                            <span class="font-serif-title font-semibold text-lg text-white">Water Temperature</span>
+                        </div>
+                        <p class="text-xs text-brand-cream/70">
+                            Use water cooled to 75°C - 80°C. Boiling water scorches fine tea powder and alters delicate amino acids.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Brew Calculator Card -->
+                <div class="lg:col-span-7 glass-card p-8 rounded-2xl border-2 border-brand-gold/30 shadow-2xl space-y-8">
+                    <h3 class="font-serif-title text-2xl text-white font-bold border-b border-brand-gold/20 pb-4 flex justify-between items-center">
+                        <span>Whisking Ratio Guide</span>
+                        <span id="selectedTeaBrewName" class="text-brand-gold text-sm font-sans uppercase tracking-widest font-normal">Ceremonial Matcha Powder</span>
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase text-brand-cream/70 font-medium flex justify-between">
+                                <span>Water Volume</span>
+                                <span id="waterVal" class="text-brand-gold font-bold">100 ml</span>
+                            </label>
+                            <input type="range" id="waterRange" min="50" max="300" step="10" value="100" oninput="updateBrewCalc()" class="w-full accent-brand-gold cursor-pointer">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase text-brand-cream/70 font-medium flex justify-between">
+                                <span>Powder Weight</span>
+                                <span id="leafVal" class="text-brand-gold font-bold">2.0 g</span>
+                            </label>
+                            <input type="range" id="leafRange" min="1" max="6" step="0.5" value="2" oninput="updateBrewCalc()" class="w-full accent-brand-gold cursor-pointer">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase text-brand-cream/70 font-medium flex justify-between">
+                                <span>Whisk Duration</span>
+                                <span id="steepVal" class="text-brand-gold font-bold">45 secs</span>
+                            </label>
+                            <input type="range" id="steepRange" min="15" max="90" step="5" value="45" oninput="updateBrewCalc()" class="w-full accent-brand-gold cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-dark/80 rounded-lg p-6 border border-brand-gold/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-gold/10 border border-brand-gold flex items-center justify-center text-brand-gold text-xl">
+                                <i class="fa-solid fa-whiskey-glass text-brand-gold"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-brand-cream/60 uppercase">Optimal Temp</span>
+                                <div id="tempResult" class="font-serif-title text-2xl font-bold text-white">75°C / 167°F</div>
+                            </div>
+                        </div>
+
+                        <button onclick="startSteepTimer()" id="steepTimerBtn" class="px-6 py-3 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition flex items-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-stopwatch"></i>
+                            <span id="timerBtnText">Start Whisking Timer</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-brand-dark border-t border-brand-gold/20 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-brand-cream/70 relative z-20">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="#heroVideoSection" onclick="closeCartDrawer()" class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full border border-brand-gold flex items-center justify-center bg-brand-deep">
+                            <svg class="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                        </div>
+                        <span class="font-serif-title text-2xl text-white font-bold tracking-[0.2em]">THE ROOTS</span>
+                    </a>
+                    <p class="text-xs text-brand-cream/60 leading-relaxed max-w-sm">
+                        Curators of pure stone-ground tea powders from high-altitude micro-climates. Elevating daily moments into tranquil luxury rituals.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-serif-title text-white text-sm font-semibold mb-4 tracking-wider uppercase">Collections</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="filterProducts('matcha'); closeCartDrawer(); window.location.hash='#collection';" class="hover:text-brand-gold transition cursor-pointer">Ceremonial Matcha</button></li>
+                        <li><button onclick="filterProducts('green'); closeCartDrawer(); window.location.hash='#collection';" class="hover:text-brand-gold transition cursor-pointer">Highland Green Powder</button></li>
+                        <li><button onclick="filterProducts('black'); closeCartDrawer(); window.location.hash='#collection';" class="hover:text-brand-gold transition cursor-pointer">Imperial Black Powder</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif-title text-white text-sm font-semibold mb-4 tracking-wider uppercase">Story & Estate</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#heroVideoSection" onclick="closeCartDrawer()" class="hover:text-brand-gold transition">Scroll Story</a></li>
+                        <li><a href="#origin" onclick="closeCartDrawer()" class="hover:text-brand-gold transition">Terroir & Origin</a></li>
+                        <li><a href="#ritual" onclick="closeCartDrawer()" class="hover:text-brand-gold transition">Tea Rituals</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif-title text-white text-sm font-semibold mb-4 tracking-wider uppercase">The Society</h4>
+                    <p class="text-xs text-brand-cream/60 mb-3">Subscribe for rare harvest announcements.</p>
+                    <form onsubmit="handleNewsletterSubmit(event)" class="space-y-2">
+                        <input type="email" placeholder="Enter your email" required class="w-full px-3 py-2 text-xs bg-brand-deep border border-brand-gold/30 rounded text-white focus:outline-none focus:border-brand-gold">
+                        <button type="submit" class="w-full py-2 bg-brand-gold text-brand-dark font-bold text-xs uppercase tracking-wider rounded hover:brightness-110 transition cursor-pointer">Join Guild</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto pt-8 border-t border-brand-gold/15 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-cream/50">
+                <p>&copy; 2026 The Roots Artisanal Tea Powder Estate. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <button onclick="showToast('Privacy Policy: All customer records encrypted.', 'shield')" class="hover:text-brand-gold transition cursor-pointer">Privacy Policy</button>
+                    <button onclick="showToast('Terms of Service: Guarantee 100% satisfaction.', 'file')" class="hover:text-brand-gold transition cursor-pointer">Terms</button>
+                    <button onclick="showToast('Complimentary luxury express shipping worldwide.', 'truck')" class="hover:text-brand-gold transition cursor-pointer">Shipping & Returns</button>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ADMIN MANAGEMENT PORTAL VIEW -->
+    <main id="adminView" class="hidden relative z-10 min-h-screen bg-brand-dark p-4 sm:p-8">
+        <div class="max-w-7xl mx-auto space-y-8">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-brand-gold/20">
+                <div>
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 bg-brand-gold text-brand-dark font-bold text-xs uppercase rounded">Admin Mode</span>
+                        <h1 class="font-serif-title text-3xl font-bold text-white">The Roots Estate Dashboard</h1>
+                    </div>
+                    <p class="text-xs text-brand-cream/60 mt-1">Real-time store management, order fulfillment, and product catalog controls.</p>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="openAddProductModal()" class="px-5 py-2.5 bg-brand-gold text-brand-dark font-bold text-xs uppercase tracking-wider rounded hover:brightness-110 transition flex items-center space-x-2 cursor-pointer">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add New Powder</span>
+                    </button>
+                    <button onclick="toggleRoleSwitch()" class="px-4 py-2.5 border border-brand-gold/40 text-brand-cream text-xs uppercase tracking-wider rounded hover:border-brand-gold transition cursor-pointer">
+                        Exit to Storefront
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-xl border border-brand-gold/30">
+                    <div class="flex items-center justify-between text-brand-cream/60 text-xs font-semibold uppercase">
+                        <span>Total Revenue</span>
+                        <i class="fa-solid fa-dollar-sign text-brand-gold"></i>
+                    </div>
+                    <div id="adminStatRevenue" class="font-serif-title text-3xl font-bold text-white mt-2">$18,420.00</div>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl border border-brand-gold/30">
+                    <div class="flex items-center justify-between text-brand-cream/60 text-xs font-semibold uppercase">
+                        <span>Total Orders</span>
+                        <i class="fa-solid fa-box text-brand-gold"></i>
+                    </div>
+                    <div id="adminStatOrders" class="font-serif-title text-3xl font-bold text-white mt-2">164</div>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl border border-brand-gold/30">
+                    <div class="flex items-center justify-between text-brand-cream/60 text-xs font-semibold uppercase">
+                        <span>Catalog Products</span>
+                        <i class="fa-solid fa-leaf text-brand-gold"></i>
+                    </div>
+                    <div id="adminStatProducts" class="font-serif-title text-3xl font-bold text-white mt-2">6</div>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl border border-brand-gold/30">
+                    <div class="flex items-center justify-between text-brand-cream/60 text-xs font-semibold uppercase">
+                        <span>Guild Members</span>
+                        <i class="fa-solid fa-users text-brand-gold"></i>
+                    </div>
+                    <div id="adminStatCustomers" class="font-serif-title text-3xl font-bold text-white mt-2">102</div>
+                </div>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="border-b border-brand-gold/20 flex space-x-6 text-sm font-semibold tracking-wider">
+                <button onclick="showAdminTab('orders')" id="tabBtnOrders" class="admin-tab-btn border-b-2 border-brand-gold text-brand-gold pb-3 font-medium cursor-pointer">Orders Management</button>
+                <button onclick="showAdminTab('products')" id="tabBtnProducts" class="admin-tab-btn border-b-2 border-transparent text-brand-cream/60 hover:text-white pb-3 font-medium cursor-pointer">Inventory & Products</button>
+                <button onclick="showAdminTab('customers')" id="tabBtnCustomers" class="admin-tab-btn border-b-2 border-transparent text-brand-cream/60 hover:text-white pb-3 font-medium cursor-pointer">Customer List</button>
+            </div>
+
+            <div id="adminTabOrders" class="space-y-4">
+                <div class="glass-card rounded-xl border border-brand-gold/30 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-brand-cream">
+                            <thead class="bg-brand-emerald/40 uppercase tracking-wider text-[11px] text-brand-gold border-b border-brand-gold/20">
+                                <tr>
+                                    <th class="py-3.5 px-4">Order ID</th>
+                                    <th class="py-3.5 px-4">Customer</th>
+                                    <th class="py-3.5 px-4">Items</th>
+                                    <th class="py-3.5 px-4">Total</th>
+                                    <th class="py-3.5 px-4">Status</th>
+                                    <th class="py-3.5 px-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTableBody" class="divide-y divide-brand-gold/10"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminTabProducts" class="space-y-4 hidden">
+                <div class="glass-card rounded-xl border border-brand-gold/30 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-brand-cream">
+                            <thead class="bg-brand-emerald/40 uppercase tracking-wider text-[11px] text-brand-gold border-b border-brand-gold/20">
+                                <tr>
+                                    <th class="py-3.5 px-4">Tea Powder</th>
+                                    <th class="py-3.5 px-4">Category</th>
+                                    <th class="py-3.5 px-4">Price</th>
+                                    <th class="py-3.5 px-4">Stock</th>
+                                    <th class="py-3.5 px-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsTableBody" class="divide-y divide-brand-gold/10"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminTabCustomers" class="space-y-4 hidden">
+                <div class="glass-card rounded-xl border border-brand-gold/30 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-brand-cream">
+                            <thead class="bg-brand-emerald/40 uppercase tracking-wider text-[11px] text-brand-gold border-b border-brand-gold/20">
+                                <tr>
+                                    <th class="py-3.5 px-4">Name</th>
+                                    <th class="py-3.5 px-4">Email</th>
+                                    <th class="py-3.5 px-4">Role</th>
+                                    <th class="py-3.5 px-4">Total Orders</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminCustomersTableBody" class="divide-y divide-brand-gold/10"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SHOPPING CART SLIDE-OUT DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm pointer-events-auto" onclick="closeCartDrawer()"></div>
+        <div class="absolute top-0 right-0 h-full w-full max-w-md bg-brand-dark border-l border-brand-gold/30 shadow-2xl pointer-events-auto transform translate-x-full transition-transform duration-300 flex flex-col justify-between" id="cartDrawerContent">
+            <div class="p-6 border-b border-brand-gold/20 flex items-center justify-between bg-brand-deep">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-bag-shopping text-brand-gold text-lg"></i>
+                    <h3 class="font-serif-title text-xl font-bold text-white">Your Tea Selection</h3>
+                </div>
+                <button onclick="closeCartDrawer()" class="text-brand-cream/60 hover:text-white transition p-2 cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div id="cartItemsContainer" class="p-6 overflow-y-auto flex-1 space-y-4"></div>
+
+            <div class="p-6 border-t border-brand-gold/20 bg-brand-deep/80 space-y-4">
+                <div class="space-y-2 text-sm text-brand-cream">
+                    <div class="flex justify-between">
+                        <span class="text-brand-cream/70">Subtotal</span>
+                        <span id="cartSubtotal" class="font-semibold text-white">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-base border-t border-brand-gold/20 pt-2 font-bold text-brand-gold">
+                        <span>Total</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                </div>
+
+                <button onclick="openCheckoutModal()" class="w-full py-4 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
+                    <span>Proceed to Checkout</span>
+                    <i class="fa-solid fa-lock text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT QUICK VIEW MODAL -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" onclick="closeProductModal()">
+        <div class="glass-card max-w-3xl w-full rounded-2xl border border-brand-gold/40 shadow-2xl overflow-hidden relative" onclick="event.stopPropagation()">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-brand-cream/70 hover:text-white p-2 z-20 cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="bg-brand-deep p-6 flex flex-col items-center justify-center relative min-h-[340px] border-b md:border-b-0 md:border-r border-brand-gold/20">
+                    <div id="modalTinVisual" class="w-full h-full rounded-xl overflow-hidden shadow-2xl border border-brand-gold/30">
+                        <!-- Rendered Image -->
+                    </div>
+                </div>
+
+                <div class="p-8 space-y-6 flex flex-col justify-between">
+                    <div>
+                        <span id="modalProductCategory" class="text-brand-gold text-[10px] uppercase tracking-[0.25em] font-bold">Ceremonial Matcha</span>
+                        <h3 id="modalProductName" class="font-serif-title text-2xl font-bold text-white mt-1">Uji Imperial Matcha</h3>
+                        <p id="modalProductOrigin" class="text-xs text-brand-cream/60 mt-0.5">Origin: Uji Estate, Kyoto</p>
+                        <p id="modalProductDesc" class="text-xs text-brand-cream/80 mt-4 leading-relaxed"></p>
+
+                        <div class="mt-6 space-y-2">
+                            <label class="text-xs uppercase tracking-wider text-brand-cream/70 font-semibold">Select Weight Tin</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="selectModalSize(100, 0.5, event)" class="size-btn px-3 py-2 border border-brand-gold/30 rounded text-xs text-brand-cream hover:border-brand-gold transition text-center cursor-pointer">100g</button>
+                                <button onclick="selectModalSize(250, 1.0, event)" class="size-btn active px-3 py-2 border border-brand-gold bg-brand-gold/20 rounded text-xs text-brand-gold font-bold transition text-center cursor-pointer">250g</button>
+                                <button onclick="selectModalSize(500, 1.8, event)" class="size-btn px-3 py-2 border border-brand-gold/30 rounded text-xs text-brand-cream hover:border-brand-gold transition text-center cursor-pointer">500g</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-baseline space-x-3">
+                            <span id="modalProductPrice" class="font-serif-title text-3xl font-bold text-brand-gold">$54.00</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4 pt-4 border-t border-brand-gold/20">
+                        <div class="flex items-center border border-brand-gold/30 rounded bg-brand-dark">
+                            <button onclick="changeModalQty(-1)" class="px-3 py-2 text-brand-gold hover:bg-brand-emerald/40 cursor-pointer">-</button>
+                            <span id="modalQtyVal" class="px-3 py-2 text-xs font-bold text-white">1</span>
+                            <button onclick="changeModalQty(1)" class="px-3 py-2 text-brand-gold hover:bg-brand-emerald/40 cursor-pointer">+</button>
+                        </div>
+
+                        <button onclick="addModalItemToCart()" class="flex-1 py-3 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>Add to Cart</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUTHENTICATION MODAL -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" onclick="closeAuthModal()">
+        <div class="glass-card max-w-md w-full p-8 rounded-2xl border border-brand-gold/40 shadow-2xl space-y-6 relative" onclick="event.stopPropagation()">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-brand-cream/70 hover:text-white p-2 cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 mx-auto rounded-full bg-brand-gold/10 border border-brand-gold flex items-center justify-center text-brand-gold">
+                    <i class="fa-solid fa-user-lock text-xl"></i>
+                </div>
+                <h3 class="font-serif-title text-2xl font-bold text-white">The Roots Sign In</h3>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase text-brand-cream/70 mb-1">Email</label>
+                    <input type="email" id="authEmail" required value="customer@theroots.com" class="w-full px-4 py-2.5 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white focus:outline-none focus:border-brand-gold">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase text-brand-cream/70 mb-1">Role</label>
+                    <select id="authRoleSelect" class="w-full px-4 py-2.5 text-xs bg-brand-dark border border-brand-gold/30 rounded text-brand-gold focus:outline-none focus:border-brand-gold">
+                        <option value="customer">Customer Storefront</option>
+                        <option value="admin">Admin Portal</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-between text-xs text-brand-gold pt-1">
+                    <button type="button" onclick="fillAuthPreset('customer')" class="hover:underline cursor-pointer">Use Customer Preset</button>
+                    <button type="button" onclick="fillAuthPreset('admin')" class="hover:underline cursor-pointer">Use Admin Preset</button>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition cursor-pointer">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" onclick="closeCheckoutModal()">
+        <div class="glass-card max-w-2xl w-full p-8 rounded-2xl border border-brand-gold/40 shadow-2xl space-y-6 relative" onclick="event.stopPropagation()">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-brand-cream/70 hover:text-white p-2 cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <h3 class="font-serif-title text-2xl font-bold text-white text-center">Secure Checkout</h3>
+
+            <form onsubmit="handlePlaceOrder(event)" class="space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" required placeholder="First Name" value="Eleanor" class="px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white">
+                    <input type="text" required placeholder="Last Name" value="Vance" class="px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white">
+                </div>
+                <input type="text" required placeholder="Shipping Address" value="742 Evergreen Terrace" class="w-full px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white">
+                
+                <div class="p-4 bg-brand-dark/80 rounded border border-brand-gold/20 flex justify-between font-bold text-brand-gold">
+                    <span>Payable Total</span>
+                    <span id="checkoutTotalAmount">$0.00</span>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-brand-gold to-brand-lightgold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition shadow-lg cursor-pointer">
+                    Complete Order & Pay
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER SUCCESS MODAL -->
+    <div id="orderSuccessModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" onclick="closeOrderSuccessModal()">
+        <div class="glass-card max-w-md w-full p-8 rounded-2xl border-2 border-brand-gold shadow-2xl text-center space-y-6" onclick="event.stopPropagation()">
+            <div class="w-16 h-16 mx-auto rounded-full bg-brand-gold/20 border-2 border-brand-gold flex items-center justify-center text-brand-gold text-2xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="font-serif-title text-3xl font-bold text-white">Order Confirmed!</h3>
+            <p id="successOrderId" class="font-mono text-brand-gold font-bold text-lg">#ROOTS-98421</p>
+            <button onclick="closeOrderSuccessModal()" class="w-full py-3 bg-brand-gold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition cursor-pointer">
+                Return to Storefront
+            </button>
+        </div>
+    </div>
+
+    <!-- ADD PRODUCT MODAL -->
+    <div id="addProductModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" onclick="closeAddProductModal()">
+        <div class="glass-card max-w-md w-full p-8 rounded-2xl border border-brand-gold/40 shadow-2xl space-y-6 relative" onclick="event.stopPropagation()">
+            <button onclick="closeAddProductModal()" class="absolute top-4 right-4 text-brand-cream/70 hover:text-white p-2 cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="font-serif-title text-2xl font-bold text-white text-center">Add New Tea Powder</h3>
+            <form onsubmit="handleAddNewProduct(event)" class="space-y-4">
+                <input type="text" id="newProdName" required placeholder="Tea Name" class="w-full px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white">
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="newProdCat" class="px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-brand-gold">
+                        <option value="matcha">Matcha</option>
+                        <option value="green">Green Powder</option>
+                        <option value="black">Black Powder</option>
+                    </select>
+                    <input type="number" step="0.01" id="newProdPrice" required placeholder="Price" class="px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white">
+                </div>
+                <input type="text" id="newProdOrigin" required placeholder="Origin" class="w-full px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white">
+                <textarea id="newProdDesc" rows="3" required placeholder="Description" class="w-full px-3 py-2 text-xs bg-brand-dark border border-brand-gold/30 rounded text-white"></textarea>
+                <button type="submit" class="w-full py-3 bg-brand-gold text-brand-dark font-bold text-xs uppercase tracking-widest rounded hover:brightness-110 transition cursor-pointer">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const initialProducts = [
+            { id: 'p1', name: 'Uji Ceremonial Matcha', category: 'matcha', price: 54.00, origin: 'Uji, Kyoto, Japan', desc: 'First-harvest shade-grown Tencha stone-ground into silky emerald ceremonial powder with intense umami depth.', weight: '100g Tin', image: 'assets/matcha.jpg' },
+            { id: 'p2', name: 'Highland Hojicha Powder', category: 'green', price: 38.00, origin: 'Shizuoka, Japan', desc: 'Roasted green tea leaves ground into a fragrant cocoa-bronze powder with rich nutty toasted aromas.', weight: '250g Tin', image: 'assets/hojicha.jpg' },
+            { id: 'p3', name: 'Imperial Assam Black Powder', category: 'black', price: 42.00, origin: 'Assam Valley, India', desc: 'Pure stone-ground whole leaf black tea. Creates velvety tea lattes with rich malt and honey notes.', weight: '250g Tin', image: 'assets/black.jpg' },
+            { id: 'p4', name: 'Fujian White Peony Powder', category: 'white', price: 62.00, origin: 'Fuding Mountain, China', desc: 'Rare white tea buds micro-milled at low temperatures to lock in delicate melon and wild orchid notes.', weight: '100g Tin', image: 'assets/white.jpg' },
+            { id: 'p5', name: 'Jade Cloud Sencha Powder', category: 'green', price: 46.00, origin: 'Kagoshima, Japan', desc: 'Vibrant early spring green tea powder rich in natural chlorophyll, L-theanine, and antioxidants.', weight: '250g Tin', image: 'assets/sencha.jpg' },
+            { id: 'p6', name: 'Earl Grey Micro-Ground', category: 'black', price: 44.00, origin: 'Highland Ceylon', desc: 'Ceylon black tea micro-ground with organic cold-pressed Bergamot orange rind.', weight: '250g Tin', image: 'assets/earlgrey.jpg' }
+        ];
+
+        const initialOrders = [
+            { id: 'ROOTS-98421', customer: 'Eleanor Vance', items: 'Uji Ceremonial Matcha x 1', total: 54.00, status: 'Processing' },
+            { id: 'ROOTS-98418', customer: 'Julian Thorne', items: 'Highland Hojicha Powder x 2', total: 76.00, status: 'Shipped' }
+        ];
+
+        const initialCustomers = [
+            { name: 'Eleanor Vance', email: 'eleanor@vance.com', role: 'Customer', orders: 4, joined: '2026-08-12' },
+            { name: 'Julian Thorne', email: 'julian@thorne.com', role: 'Customer', orders: 8, joined: '2026-05-19' },
+            { name: 'Hitoshi Tanaka', email: 'admin@theroots.com', role: 'Admin', orders: 0, joined: '2026-01-01' }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('roots_products')) || initialProducts;
+        let orders = JSON.parse(localStorage.getItem('roots_orders')) || initialOrders;
+        let customers = JSON.parse(localStorage.getItem('roots_customers')) || initialCustomers;
+        let cart = [];
+        let currentRole = 'customer';
+        let activeModalProduct = null;
+        let selectedModalMultiplier = 1.0;
+        let modalQty = 1;
+
+        function saveState() {
+            localStorage.setItem('roots_products', JSON.stringify(products));
+            localStorage.setItem('roots_orders', JSON.stringify(orders));
+            localStorage.setItem('roots_customers', JSON.stringify(customers));
+        }
+
+        function showToast(msg, icon = 'check') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = `fa-solid fa-${icon}`;
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Canvas Video Engine
+        function initCanvasVideoEngine() {
+            const video = document.getElementById('scrollVideo');
+            const canvas = document.getElementById('scrollCanvas');
+            const ctx = canvas.getContext('2d');
+            const section = document.getElementById('heroVideoSection');
+            const progressBar = document.getElementById('videoProgressBar');
+
+            const card1 = document.getElementById('storyCard1');
+            const card2 = document.getElementById('storyCard2');
+            const card3 = document.getElementById('storyCard3');
+
+            let targetTime = 0;
+            let currentSeekTime = 0;
+            let isSeeking = false;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawVideoFrame();
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function drawVideoFrame() {
+                if (!video || video.readyState < 2) return;
+
+                const vWidth = video.videoWidth || 1920;
+                const vHeight = video.videoHeight || 1080;
+                const cWidth = canvas.width;
+                const cHeight = canvas.height;
+
+                const vAspect = vWidth / vHeight;
+                const cAspect = cWidth / cHeight;
+
+                let drawW, drawH, drawX, drawY;
+
+                if (cAspect > vAspect) {
+                    drawW = cWidth;
+                    drawH = cWidth / vAspect;
+                    drawX = 0;
+                    drawY = (cHeight - drawH) / 2;
+                } else {
+                    drawH = cHeight;
+                    drawW = cHeight * vAspect;
+                    drawX = (cWidth - drawW) / 2;
+                    drawY = 0;
+                }
+
+                ctx.drawImage(video, drawX, drawY, drawW, drawH);
+            }
+
+            function onScroll() {
+                if (!section || !video.duration) return;
+
+                const rect = section.getBoundingClientRect();
+                const totalScrollable = section.offsetHeight - window.innerHeight;
+                let progress = -rect.top / totalScrollable;
+                progress = Math.max(0, Math.min(1, progress));
+
+                targetTime = progress * video.duration;
+
+                if (progressBar) {
+                    progressBar.style.width = `${progress * 100}%`;
+                }
+
+                if (progress < 0.25) {
+                    card1.classList.add('active');
+                    card2.classList.remove('active');
+                    card3.classList.remove('active');
+                } else if (progress >= 0.25 && progress < 0.65) {
+                    card1.classList.remove('active');
+                    card2.classList.add('active');
+                    card3.classList.remove('active');
+                } else if (progress >= 0.65) {
+                    card1.classList.remove('active');
+                    card2.classList.remove('active');
+                    card3.classList.add('active');
+                }
+            }
+
+            function renderLoop() {
+                if (video.duration) {
+                    const diff = targetTime - currentSeekTime;
+                    if (Math.abs(diff) > 0.01) {
+                        currentSeekTime += diff * 0.12;
+                        if (!isSeeking) {
+                            isSeeking = true;
+                            video.currentTime = currentSeekTime;
+                        }
+                    }
+                }
+                drawVideoFrame();
+                requestAnimationFrame(renderLoop);
+            }
+
+            video.addEventListener('seeked', () => {
+                isSeeking = false;
+                drawVideoFrame();
+            });
+
+            video.addEventListener('loadedmetadata', () => {
+                video.pause();
+                onScroll();
+                drawVideoFrame();
+            });
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            renderLoop();
+        }
+
+        // Render Product Cards
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-6 border border-brand-gold/30 hover:border-brand-gold transition duration-300 flex flex-col justify-between group shadow-xl';
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="w-full h-56 rounded-xl relative overflow-hidden border border-brand-gold/20 group-hover:scale-[1.02] transition duration-300 cursor-pointer" onclick="openProductModal('${p.id}')">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover brightness-95 group-hover:brightness-105 transition duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-black/30"></div>
+                            <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded text-[9px] uppercase tracking-widest font-bold bg-brand-dark/80 text-brand-gold border border-brand-gold/30 backdrop-blur-sm">${p.category}</span>
+                            <span class="absolute bottom-3 left-3 text-[10px] text-brand-cream uppercase tracking-widest font-semibold">${p.weight}</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-brand-gold uppercase tracking-widest block font-bold">${p.origin}</span>
+                            <h3 class="font-serif-title text-xl font-bold text-white mt-1 group-hover:text-brand-gold transition cursor-pointer" onclick="openProductModal('${p.id}')">${p.name}</h3>
+                            <p class="text-xs text-brand-cream/70 mt-2 line-clamp-2 leading-relaxed">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-brand-gold/15 flex items-center justify-between">
+                        <span class="font-serif-title text-2xl font-bold text-brand-gold">$${p.price.toFixed(2)}</span>
+                        <div class="flex space-x-2">
+                            <button onclick="openProductModal('${p.id}')" class="p-2.5 rounded border border-brand-gold/30 text-brand-cream hover:text-brand-gold hover:border-brand-gold transition cursor-pointer" title="Quick View"><i class="fa-regular fa-eye"></i></button>
+                            <button onclick="quickAddToCart('${p.id}')" class="px-4 py-2.5 bg-brand-gold text-brand-dark font-bold text-xs uppercase tracking-wider rounded hover:brightness-110 transition shadow flex items-center space-x-1.5 cursor-pointer"><i class="fa-solid fa-cart-plus"></i> <span>Add</span></button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterProducts(cat, evt) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('bg-brand-gold', 'text-brand-dark', 'font-bold'));
+            if (evt) evt.target.classList.add('bg-brand-gold', 'text-brand-dark', 'font-bold');
+            renderProducts(cat);
+        }
+
+        // Cart Drawer Controls (Strictly separate Open & Close)
+        function openCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const content = document.getElementById('cartDrawerContent');
+            drawer.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('translate-x-full');
+        }
+
+        function closeCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const content = document.getElementById('cartDrawerContent');
+            if (drawer && content) {
+                content.classList.add('translate-x-full');
+                setTimeout(() => drawer.classList.add('opacity-0', 'pointer-events-none'), 300);
+            }
+        }
+
+        // quickAddToCart now adds to cart with toast notification WITHOUT force-opening side drawer
+        function quickAddToCart(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+            const existing = cart.find(i => i.id === id && i.weight === prod.weight);
+            if (existing) existing.qty += 1;
+            else cart.push({ id: prod.id, name: prod.name, price: prod.price, weight: prod.weight, qty: 1 });
+            updateCartUI();
+            showToast(`Added ${prod.name} to cart!`, 'cart-plus');
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            container.innerHTML = '';
+            let subtotal = 0, count = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i class="fa-solid fa-mug-hot text-4xl text-brand-gold/30"></i>
+                        <p class="text-sm text-brand-cream/60">Your cart is currently empty.</p>
+                        <a href="#collection" onclick="closeCartDrawer()" class="inline-block text-xs font-bold text-brand-gold underline uppercase">Browse Collection</a>
+                    </div>
+                `;
+            } else {
+                cart.forEach((item, idx) => {
+                    count += item.qty;
+                    const itemTotal = item.price * item.qty;
+                    subtotal += itemTotal;
+
+                    container.innerHTML += `
+                        <div class="p-4 rounded-lg bg-brand-deep border border-brand-gold/20 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-serif-title text-sm font-semibold text-white">${item.name}</h4>
+                                <span class="text-[10px] text-brand-gold block">${item.weight} • $${item.price.toFixed(2)} each</span>
+                                <div class="flex items-center space-x-2 mt-2">
+                                    <button onclick="changeCartQty(${idx}, -1)" class="w-5 h-5 rounded border border-brand-gold/30 text-brand-gold text-xs flex items-center justify-center hover:bg-brand-emerald cursor-pointer">-</button>
+                                    <span class="text-xs font-bold text-white px-2">${item.qty}</span>
+                                    <button onclick="changeCartQty(${idx}, 1)" class="w-5 h-5 rounded border border-brand-gold/30 text-brand-gold text-xs flex items-center justify-center hover:bg-brand-emerald cursor-pointer">+</button>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-serif-title font-bold text-brand-gold block text-base">$${itemTotal.toFixed(2)}</span>
+                                <button onclick="removeCartItem(${idx})" class="text-[10px] text-red-400 hover:underline mt-2 cursor-pointer">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('cartBadge').innerText = count;
+            document.getElementById('cartSubtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartTotal').innerText = `$${subtotal.toFixed(2)}`;
+        }
+
+        function changeCartQty(idx, delta) {
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            updateCartUI();
+        }
+
+        function removeCartItem(idx) {
+            cart.splice(idx, 1);
+            updateCartUI();
+            showToast('Item removed from cart', 'trash');
+        }
+
+        // Modal Controls & Weight Selections
+        function openProductModal(id) {
+            closeCartDrawer();
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+            activeModalProduct = prod;
+            selectedModalMultiplier = 1.0;
+            modalQty = 1;
+
+            document.getElementById('modalProductName').innerText = prod.name;
+            document.getElementById('modalProductCategory').innerText = prod.category;
+            document.getElementById('modalProductOrigin').innerText = `Origin: ${prod.origin}`;
+            document.getElementById('modalProductDesc').innerText = prod.desc;
+            document.getElementById('modalQtyVal').innerText = modalQty;
+
+            document.getElementById('modalTinVisual').innerHTML = `
+                <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover rounded-xl">
+            `;
+
+            updateModalPrice();
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function closeProductModal() { document.getElementById('productModal').classList.add('hidden'); }
+
+        function selectModalSize(weight, mult, evt) {
+            selectedModalMultiplier = mult;
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active', 'bg-brand-gold/20', 'border-brand-gold', 'text-brand-gold', 'font-bold'));
+            if (evt) evt.target.classList.add('active', 'bg-brand-gold/20', 'border-brand-gold', 'text-brand-gold', 'font-bold');
+            updateModalPrice();
+        }
+
+        function changeModalQty(delta) {
+            modalQty = Math.max(1, modalQty + delta);
+            document.getElementById('modalQtyVal').innerText = modalQty;
+            updateModalPrice();
+        }
+
+        function updateModalPrice() {
+            if (!activeModalProduct) return;
+            const singlePrice = activeModalProduct.price * selectedModalMultiplier;
+            const total = singlePrice * modalQty;
+            document.getElementById('modalProductPrice').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function addModalItemToCart() {
+            if (!activeModalProduct) return;
+            const singlePrice = activeModalProduct.price * selectedModalMultiplier;
+            const weightLabel = selectedModalMultiplier === 1.0 ? '250g Tin' : (selectedModalMultiplier === 0.5 ? '100g Tin' : '500g Tin');
+            
+            cart.push({
+                id: activeModalProduct.id,
+                name: activeModalProduct.name,
+                price: singlePrice,
+                weight: weightLabel,
+                qty: modalQty
+            });
+
+            updateCartUI();
+            closeProductModal();
+            showToast(`Added ${activeModalProduct.name} (${weightLabel})`, 'cart-plus');
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) return alert('Your cart is empty.');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('checkoutTotalAmount').innerText = `$${subtotal.toFixed(2)}`;
+            closeCartDrawer();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() { document.getElementById('checkoutModal').classList.add('hidden'); }
+
+        function handlePlaceOrder(e) {
+            e.preventDefault();
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const newId = `ROOTS-${Math.floor(10000 + Math.random() * 90000)}`;
+            orders.unshift({ id: newId, customer: 'Eleanor Vance', items: cart.map(c => `${c.name} (${c.weight}) x ${c.qty}`).join(', '), total: subtotal, status: 'Processing' });
+            saveState();
+            cart = [];
+            updateCartUI();
+            closeCheckoutModal();
+            document.getElementById('successOrderId').innerText = `#${newId}`;
+            document.getElementById('orderSuccessModal').classList.remove('hidden');
+            renderAdminOrders();
+        }
+
+        function closeOrderSuccessModal() { document.getElementById('orderSuccessModal').classList.add('hidden'); }
+
+        function openAuthModal() { closeCartDrawer(); document.getElementById('authModal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function fillAuthPreset(role) {
+            if (role === 'admin') {
+                document.getElementById('authEmail').value = 'admin@theroots.com';
+                document.getElementById('authRoleSelect').value = 'admin';
+            } else {
+                document.getElementById('authEmail').value = 'customer@theroots.com';
+                document.getElementById('authRoleSelect').value = 'customer';
+            }
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            currentRole = document.getElementById('authRoleSelect').value;
+            const email = document.getElementById('authEmail').value;
+            document.getElementById('userAccountName').innerText = email.split('@')[0];
+            closeAuthModal();
+            applyRoleView();
+            showToast(`Signed in as ${currentRole.toUpperCase()}`, 'user-check');
+        }
+
+        function toggleRoleSwitch() {
+            closeCartDrawer();
+            currentRole = (currentRole === 'customer') ? 'admin' : 'customer';
+            applyRoleView();
+            showToast(`Switched to ${currentRole.toUpperCase()} mode`, 'arrows-rotate');
+        }
+
+        function applyRoleView() {
+            if (currentRole === 'admin') {
+                document.getElementById('customerView').classList.add('hidden');
+                document.getElementById('adminView').classList.remove('hidden');
+                document.getElementById('roleIndicator').innerText = 'Mode: Admin';
+                document.getElementById('customerNavLinks').classList.add('hidden');
+                document.getElementById('adminNavLinks').classList.remove('hidden');
+                renderAdminOrders();
+                renderAdminProducts();
+                renderAdminCustomers();
+            } else {
+                document.getElementById('adminView').classList.add('hidden');
+                document.getElementById('customerView').classList.remove('hidden');
+                document.getElementById('roleIndicator').innerText = 'Mode: Customer';
+                document.getElementById('adminNavLinks').classList.add('hidden');
+                document.getElementById('customerNavLinks').classList.remove('hidden');
+            }
+        }
+
+        function showAdminTab(tabName) {
+            document.getElementById('adminTabOrders').classList.add('hidden');
+            document.getElementById('adminTabProducts').classList.add('hidden');
+            document.getElementById('adminTabCustomers').classList.add('hidden');
+
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('border-brand-gold', 'text-brand-gold'));
+
+            if (tabName === 'orders') {
+                document.getElementById('adminTabOrders').classList.remove('hidden');
+                document.getElementById('tabBtnOrders').classList.add('border-brand-gold', 'text-brand-gold');
+            } else if (tabName === 'products') {
+                document.getElementById('adminTabProducts').classList.remove('hidden');
+                document.getElementById('tabBtnProducts').classList.add('border-brand-gold', 'text-brand-gold');
+            } else if (tabName === 'customers') {
+                document.getElementById('adminTabCustomers').classList.remove('hidden');
+                document.getElementById('tabBtnCustomers').classList.add('border-brand-gold', 'text-brand-gold');
+            }
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersTableBody');
+            tbody.innerHTML = '';
+            orders.forEach(o => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-brand-emerald/20">
+                        <td class="py-3 px-4 font-mono font-bold text-brand-gold">${o.id}</td>
+                        <td class="py-3 px-4 font-medium text-white">${o.customer}</td>
+                        <td class="py-3 px-4 text-brand-cream/70">${o.items}</td>
+                        <td class="py-3 px-4 font-bold text-white">$${o.total.toFixed(2)}</td>
+                        <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500/20 text-yellow-400">${o.status}</span></td>
+                        <td class="py-3 px-4">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-brand-dark border border-brand-gold/30 text-xs text-brand-gold rounded px-2 py-1 cursor-pointer">
+                                <option value="Processing" ${o.status==='Processing'?'selected':''}>Processing</option>
+                                <option value="Shipped" ${o.status==='Shipped'?'selected':''}>Shipped</option>
+                                <option value="Delivered" ${o.status==='Delivered'?'selected':''}>Delivered</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateOrderStatus(id, status) {
+            const ord = orders.find(o => o.id === id);
+            if (ord) {
+                ord.status = status;
+                saveState();
+                renderAdminOrders();
+                showToast(`Order ${id} status updated to ${status}`, 'truck');
+            }
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('adminProductsTableBody');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-brand-emerald/20">
+                        <td class="py-3 px-4 font-bold text-white">${p.name}</td>
+                        <td class="py-3 px-4 uppercase text-[10px] text-brand-gold font-bold">${p.category}</td>
+                        <td class="py-3 px-4 font-bold text-brand-gold">$${p.price.toFixed(2)}</td>
+                        <td class="py-3 px-4 text-brand-cream">50 units</td>
+                        <td class="py-3 px-4"><button onclick="deleteProduct('${p.id}')" class="text-red-400 hover:underline cursor-pointer">Delete</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Delete this product from catalog?')) {
+                products = products.filter(p => p.id !== id);
+                saveState();
+                renderProducts();
+                renderAdminProducts();
+                showToast('Product removed from catalog', 'trash');
+            }
+        }
+
+        function renderAdminCustomers() {
+            const tbody = document.getElementById('adminCustomersTableBody');
+            tbody.innerHTML = '';
+            customers.forEach(c => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-brand-emerald/20">
+                        <td class="py-3 px-4 font-bold text-white">${c.name}</td>
+                        <td class="py-3 px-4 text-brand-cream/70">${c.email}</td>
+                        <td class="py-3 px-4 uppercase text-[10px] font-bold text-brand-gold">${c.role}</td>
+                        <td class="py-3 px-4 font-semibold text-white">${c.orders} orders</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openAddProductModal() { document.getElementById('addProductModal').classList.remove('hidden'); }
+        function closeAddProductModal() { document.getElementById('addProductModal').classList.add('hidden'); }
+
+        function handleAddNewProduct(e) {
+            e.preventDefault();
+            products.push({
+                id: `p${Date.now()}`,
+                name: document.getElementById('newProdName').value,
+                category: document.getElementById('newProdCat').value,
+                price: parseFloat(document.getElementById('newProdPrice').value),
+                origin: document.getElementById('newProdOrigin').value,
+                desc: document.getElementById('newProdDesc').value,
+                weight: '250g Tin',
+                image: 'assets/matcha.jpg'
+            });
+            saveState();
+            renderProducts();
+            renderAdminProducts();
+            closeAddProductModal();
+            showToast('New tea powder added to inventory!', 'leaf');
+        }
+
+        // Whisking Timer
+        let whiskInterval = null;
+        function startSteepTimer() {
+            const btnText = document.getElementById('timerBtnText');
+            let duration = parseInt(document.getElementById('steepRange').value);
+
+            if (whiskInterval) {
+                clearInterval(whiskInterval);
+                whiskInterval = null;
+                btnText.innerText = 'Start Whisking Timer';
+                return;
+            }
+
+            whiskInterval = setInterval(() => {
+                duration--;
+                if (duration <= 0) {
+                    clearInterval(whiskInterval);
+                    whiskInterval = null;
+                    btnText.innerText = 'Whisking Complete!';
+                    showToast('✨ Whisking complete! Enjoy your rich emerald froth.', 'whiskey-glass');
+                } else {
+                    btnText.innerText = `Whisking: ${duration}s left`;
+                }
+            }, 1000);
+        }
+
+        function updateBrewCalc() {
+            document.getElementById('waterVal').innerText = `${document.getElementById('waterRange').value} ml`;
+            document.getElementById('leafVal').innerText = `${parseFloat(document.getElementById('leafRange').value).toFixed(1)} g`;
+            document.getElementById('steepVal').innerText = `${parseFloat(document.getElementById('steepRange').value).toFixed(0)} secs`;
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            showToast('Subscribed to The Roots Society!', 'envelope');
+            e.target.reset();
+        }
+
+        function toggleSearchModal() {
+            closeCartDrawer();
+            const query = prompt('Search The Roots teas (e.g., Matcha, Hojicha, Assam):');
+            if (query) {
+                const found = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.category.toLowerCase().includes(query.toLowerCase()));
+                if (found.length > 0) {
+                    filterProducts(found[0].category);
+                    window.location.hash = '#collection';
+                    showToast(`Found ${found.length} matching tea powder(s)`, 'search');
+                } else {
+                    alert('No matching tea powder found.');
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartUI();
+            initCanvasVideoEngine();
+        });
+    </script>
+</body>
+</html>
